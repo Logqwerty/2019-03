@@ -29,6 +29,7 @@
     "react-scripts": "^3.3.0",
     "react-toastify": "^5.4.1",
     "react-virtualized": "^9.21.2",
+    "storybook-react-router": "^1.0.8",
     "styled-components": "^4.4.1",
     "styled-tools": "^1.7.2",
     "underscore": "^1.9.1",
