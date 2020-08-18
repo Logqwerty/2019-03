@@ -7,7 +7,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { createGlobalStyle } from 'styled-components';
 import { CookiesProvider } from 'react-cookie';
 import { createUploadLink } from 'apollo-upload-client';
-import App from './containers/App';
+import App from './containers/before/App';
 
 const cache = new InMemoryCache();
 cache.writeData({

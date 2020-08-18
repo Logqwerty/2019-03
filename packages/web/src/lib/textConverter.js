@@ -1,6 +1,6 @@
 import React from 'react';
 
-import StyledLink from '../components/StyledLink';
+import StyledLink from '../components/before/StyledLink';
 
 function textParser(content) {
   let isTag = false;
