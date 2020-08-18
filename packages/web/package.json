@@ -18,6 +18,7 @@
     "immer": "^5.0.0",
     "intersection-observer": "^0.7.0",
     "polished": "^3.4.2",
+    "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-cookie": "^4.0.1",
     "react-copy-to-clipboard": "^5.0.2",
@@ -28,6 +29,7 @@
     "react-toastify": "^5.4.1",
     "react-virtualized": "^9.21.2",
     "styled-components": "^4.4.1",
+    "styled-tools": "^1.7.2",
     "underscore": "^1.9.1",
     "url-regex": "^5.0.0",
     "validator": "^12.1.0"
