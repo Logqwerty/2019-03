@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Icon from '../../atoms/Icon';
-import Button from '../../atoms/Button';
+import { Icon, Button } from '@atoms';
+import { BUTTON_TYPES } from '@const';
 
 const propTypes = {
   iconType: PropTypes.string.isRequired,
@@ -14,9 +14,15 @@ const defaultProps = {
   ratio: 6,
 };
 
-const IconButton = ({ iconType, ratio, onClick }) => {
+const IconButton = ({ iconType, ratio, onClick, ...props }) => {
   return (
-    <Button type="button" onClick={onClick} transparent onlyContent>
+    <Button
+      type={BUTTON_TYPES.button}
+      onClick={onClick}
+      transparent
+      onlyContent
+      {...props}
+    >
       <Icon type={iconType} ratio={ratio} />
     </Button>
   );

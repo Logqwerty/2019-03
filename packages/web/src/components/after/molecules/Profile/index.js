@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Image } from '@atoms';
+import { PROFILE_MAX_RATIO } from '@const';
 import defaultProfileImage from './default_profile.png';
-import * as S from './styles';
-
-import Image from '../../atoms/Image';
-import Link from '../../atoms/Link';
+import { ProfileLink } from './styles';
 
 const propTypes = {
   imgUrl: PropTypes.string,
@@ -13,21 +12,14 @@ const propTypes = {
 };
 
 const defaultProps = {
-  ratio: 10,
+  ratio: PROFILE_MAX_RATIO,
 };
 
-const Profile = ({ ratio, imgUrl, ...linkProps }) => {
+const Profile = ({ ratio, imgUrl, className, ...linkProps }) => {
   return (
-    <S.ProfileFlex
-      align="center"
-      verticalAlign="middle"
-      ratio={ratio}
-      {...linkProps}
-    >
-      <Link {...linkProps}>
-        <Image src={imgUrl || defaultProfileImage} round />
-      </Link>
-    </S.ProfileFlex>
+    <ProfileLink ratio={ratio} className={className} {...linkProps}>
+      <Image src={imgUrl || defaultProfileImage} round />
+    </ProfileLink>
   );
 };
 

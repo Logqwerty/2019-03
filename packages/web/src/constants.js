@@ -22,6 +22,9 @@ export const BUTTON_TYPES = Object.freeze({
   submit: 'submit',
 });
 
+export const PROFILE_LENGTH = 32;
+export const PROFILE_MAX_RATIO = 10;
+
 export const ICON_IMAGE_LENGTH = 1000;
 export const ICON_LENGTH = 125;
 export const ICON_LOGO_WIDTH = 1000;
