@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as S from './styles';
+import { BUTTON_TYPES } from '@const';
+import { StyledLink, StyledAnchor, StyledButton } from './styles';
 
 const propTypes = {
   disabled: PropTypes.bool,
   transparent: PropTypes.bool,
   onlyContent: PropTypes.bool,
-  fontSize: PropTypes.number,
-  fontWeight: PropTypes.number,
   unit: PropTypes.number,
-  type: PropTypes.oneOf(['button', 'submit', 'reset']),
+  type: PropTypes.oneOf([
+    BUTTON_TYPES.button,
+    BUTTON_TYPES.submit,
+    BUTTON_TYPES.reset,
+  ]),
   href: PropTypes.string,
   to: PropTypes.oneOfType([
     PropTypes.string,
@@ -29,60 +32,14 @@ const defaultProps = {
   onClick: () => {},
 };
 
-const Button = ({
-  to,
-  href,
-  type,
-  disabled,
-  transparent,
-  onlyContent,
-  fontSize,
-  fontWeight,
-  unit,
-  onClick,
-  ...props
-}) => {
+const Button = ({ to, href, type, onClick, ...props }) => {
   if (to) {
-    return (
-      <S.Link
-        to={to}
-        unit={unit}
-        disabled={disabled}
-        transparent={transparent}
-        onlyContent={onlyContent}
-        fontSize={fontSize}
-        fontWeight={fontWeight}
-        {...props}
-      />
-    );
+    return <StyledLink to={to} {...props} />;
   }
   if (href) {
-    return (
-      <S.Anchor
-        href={href}
-        unit={unit}
-        disabled={disabled}
-        transparent={transparent}
-        onlyContent={onlyContent}
-        fontSize={fontSize}
-        fontWeight={fontWeight}
-        {...props}
-      />
-    );
+    return <StyledAnchor href={href} {...props} />;
   }
-  return (
-    <S.Button
-      type={type}
-      onClick={onClick}
-      unit={unit}
-      disabled={disabled}
-      transparent={transparent}
-      onlyContent={onlyContent}
-      fontSize={fontSize}
-      fontWeight={fontWeight}
-      {...props}
-    />
-  );
+  return <StyledButton type={type} onClick={onClick} {...props} />;
 };
 
 Button.propTypes = propTypes;

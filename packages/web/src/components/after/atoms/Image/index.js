@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as S from './styles';
+import { StyledImg } from './styles';
 
 const propTypes = {
   src: PropTypes.string,
@@ -8,8 +8,8 @@ const propTypes = {
   round: PropTypes.bool,
 };
 
-const Image = ({ src, alt, round }) => {
-  return <S.Img src={src} alt={alt} round={round} />;
+const Image = ({ src, alt, round, ...props }) => {
+  return <StyledImg src={src} alt={alt} round={round} {...props} />;
 };
 
 Image.propTypes = propTypes;

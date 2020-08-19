@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as S from './styles';
+import { StyledLink, StyledAnchor } from './styles';
 
 const propTypes = {
   href: PropTypes.string,
@@ -17,9 +17,9 @@ const propTypes = {
   ]),
 };
 
-const Link = ({ to, ...props }) => {
-  if (to) return <S.NavLink to={to} {...props} />;
-  return <S.Anchor {...props} />;
+const Link = ({ to, href, ...props }) => {
+  if (to) return <StyledLink to={to} {...props} />;
+  return <StyledAnchor href={href} {...props} />;
 };
 
 Link.propTypes = propTypes;
