@@ -2,7 +2,7 @@ import React from 'react';
 import { withKnobs, number, select } from '@storybook/addon-knobs';
 
 import Icon from '.';
-import { ICON_TYPES } from './constatns';
+import { ICON_TYPES } from '../../../../constants';
 
 export default {
   title: 'components/atoms/Icon',
