@@ -16,9 +16,9 @@ const defaultProps = {
   verticalAlign: FLEX_ALIGN.flexEnd,
 };
 
-const Flex = props => {
-  return <StyledDiv {...props} />;
-};
+const Flex = React.forwardRef((props, ref) => {
+  return <StyledDiv {...props} ref={ref} />;
+});
 
 Flex.propTypes = propTypes;
 Flex.defaultProps = defaultProps;
