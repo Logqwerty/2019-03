@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  web:
+    container_name: youngstar_web
+    build:
+      context: ../packages/web
+      dockerfile: Dockerfile-dev
+    ports:
+      - "80:80"
+    links:
+      - api
+  api:
+    container_name: youngstar_api
+    build:
+      context: ../packages/api-server
+      dockerfile: Dockerfile-dev
+    ports:
+      - "4000:4000"
+    env_file:
+      # must remove "-template" from "api-template.env" file.
+      - .api.env
+    links:
+      - mysql
+      - redis
+  mysql:
+    container_name: youngstar_mysql
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    env_file:
+      # must remove "-template" from "mysql-template.env" file.
+      - .mysql.env
+    volumes:
+      - $DATA_PATH:/var/lib/mysql
+  redis:
+    container_name: youngstar_redis
+    image: redis:6.0.6-alpine
+    # check .env file about "REDIS_REQUIREPASS" variable.
+    command: "redis-server --bind redis --requirepass $REDIS_REQUIREPASS"
+    ports:
+      - "6379:6379"

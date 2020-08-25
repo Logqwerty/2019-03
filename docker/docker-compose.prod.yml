@@ -3,7 +3,7 @@ version: "3"
 services:
   web:
     build:
-      context: ./web
+      context: ../packages/web
     ports:
       - "80:80"
       - "443:443"
@@ -14,6 +14,6 @@ services:
       - /var/lib/letsencrypt:/var/lib/letsencrypt
   app:
     build:
-      context: ./api-server
+      context: ../packages/api-server
     ports:
       - "4000:4000"

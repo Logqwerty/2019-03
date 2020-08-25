@@ -1,0 +1,10 @@
+{
+  "name": "2019-03",
+  "repository": "https://github.com/Logqwerty/2019-03.git",
+  "author": "Logqwerty <inm2790@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}
