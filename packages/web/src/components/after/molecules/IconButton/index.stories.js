@@ -2,8 +2,8 @@ import React from 'react';
 import { withKnobs, select, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
+import { ICON_TYPES, ICON_MAX_RATIO } from '@const';
 import IconButton from '.';
-import { ICON_TYPES, ICON_MAX_RATIO } from '../../../../constants';
 
 export default {
   title: 'components/molecules/IconButton',

@@ -2,6 +2,29 @@ export const DEFAULT_UNIT = 3;
 export const DEFAULT_FONT_SIZE = 14;
 export const DEFAULT_FONT_WEIGHT = 600;
 
+export const FLEX_DIRECTION = Object.freeze({
+  row: 'row',
+  col: 'column',
+});
+
+export const FLEX_ALIGN = Object.freeze({
+  flexStart: 'flex-start',
+  center: 'center',
+  flexEnd: 'flex-end',
+  between: 'space-between',
+  around: 'space-around',
+  evenly: 'space-evenly',
+});
+
+export const BUTTON_TYPES = Object.freeze({
+  button: 'button',
+  reset: 'reset',
+  submit: 'submit',
+});
+
+export const PROFILE_LENGTH = 32;
+export const PROFILE_MAX_RATIO = 10;
+
 export const ICON_IMAGE_LENGTH = 1000;
 export const ICON_LENGTH = 125;
 export const ICON_LOGO_WIDTH = 1000;

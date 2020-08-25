@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as S from './styles';
+import { FLEX_DIRECTION, FLEX_ALIGN } from '@const';
+import { StyledDiv } from './styles';
 
 const propTypes = {
   direction: PropTypes.string,
@@ -10,13 +11,13 @@ const propTypes = {
 };
 
 const defaultProps = {
-  direction: 'row',
-  align: 'start',
-  verticalAlign: 'top',
+  direction: FLEX_DIRECTION.row,
+  align: FLEX_ALIGN.flexStart,
+  verticalAlign: FLEX_ALIGN.flexEnd,
 };
 
 const Flex = props => {
-  return <S.Wrapper {...props} />;
+  return <StyledDiv {...props} />;
 };
 
 Flex.propTypes = propTypes;

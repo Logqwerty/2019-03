@@ -1,14 +1,16 @@
 import React from 'react';
-import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
+import {
+  withKnobs,
+  text,
+  boolean,
+  number,
+  select,
+} from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import StoryRouter from 'storybook-react-router';
 
+import { DEFAULT_UNIT, BUTTON_TYPES } from '@const';
 import Button from '.';
-import {
-  DEFAULT_FONT_WEIGHT,
-  DEFAULT_FONT_SIZE,
-  DEFAULT_UNIT,
-} from '../../../../constants';
 
 export default {
   title: 'components/atoms/Button',
@@ -19,8 +21,7 @@ export default {
 export const base = () => {
   const to = text('to', '');
   const href = text('href', '');
-  const fontSize = number('fontSize', DEFAULT_FONT_SIZE);
-  const fontWeight = number('fontWeight', DEFAULT_FONT_WEIGHT);
+  const type = select('type', BUTTON_TYPES, BUTTON_TYPES.button);
   const unit = number('unit', DEFAULT_UNIT);
   const content = text('content', 'Button');
   const disabled = boolean('disabled', false);
@@ -31,8 +32,7 @@ export const base = () => {
     <Button
       to={to}
       href={href}
-      fontSize={fontSize}
-      fontWeight={fontWeight}
+      type={type}
       unit={unit}
       disabled={disabled}
       transparent={transparent}

@@ -1,4 +1,4 @@
-import { Link as _Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { palette, withProp, ifProp, prop } from 'styled-tools';
 
@@ -9,9 +9,6 @@ import {
 } from '../../../../constants';
 
 const withUnit = fn => withProp(prop('unit', DEFAULT_UNIT), fn);
-const withFontSize = fn => withProp(prop('fontSize', DEFAULT_FONT_SIZE), fn);
-const withFontWeight = fn =>
-  withProp(prop('fontWeight', DEFAULT_FONT_WEIGHT), fn);
 const withDisabledAndTransparent = fn =>
   withProp([prop('disabled'), prop('transparent')], fn);
 
@@ -53,8 +50,8 @@ const styles = css`
 
   text-decoration: none;
   appearance: none;
-  font-size: ${withFontSize(fontSize => `${fontSize}px`)};
-  font-weight: ${withFontWeight(fontWeight => fontWeight)};
+  font-size: ${DEFAULT_FONT_SIZE}px;
+  font-weight: ${DEFAULT_FONT_WEIGHT}px;
 
   cursor: ${ifProp('disabled', 'default', 'pointer')};
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
@@ -68,14 +65,14 @@ const styles = css`
   }
 `;
 
-export const Button = styled.button`
+export const StyledButton = styled.button`
   ${styles}
 `;
 
-export const Link = styled(_Link)`
+export const StyledLink = styled(Link)`
   ${styles}
 `;
 
-export const Anchor = styled.a`
+export const StyledAnchor = styled.a`
   ${styles}
 `;

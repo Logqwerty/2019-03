@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { withKnobs, select } from '@storybook/addon-knobs';
 
+import { FLEX_DIRECTION, FLEX_ALIGN } from '@const';
 import Flex from '.';
 
 export default {
@@ -23,31 +24,12 @@ export const base = () => {
     width: '300px',
     height: '300px',
   };
-  const direction = select(
-    'direction',
-    {
-      row: 'row',
-      column: 'column',
-    },
-    'row',
-  );
-  const align = select(
-    'align',
-    {
-      start: 'start',
-      center: 'center',
-      end: 'end',
-    },
-    'start',
-  );
+  const direction = select('direction', FLEX_DIRECTION, FLEX_DIRECTION.row);
+  const align = select('align', FLEX_ALIGN, FLEX_ALIGN.flexStart);
   const verticalAlign = select(
     'verticalAlign',
-    {
-      top: 'top',
-      middle: 'middle',
-      bottom: 'bottom',
-    },
-    'top',
+    FLEX_ALIGN,
+    FLEX_ALIGN.flexStart,
   );
 
   return (

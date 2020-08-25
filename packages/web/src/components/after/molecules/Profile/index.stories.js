@@ -2,6 +2,7 @@ import React from 'react';
 import { withKnobs, text, number } from '@storybook/addon-knobs';
 import StoryRouter from 'storybook-react-router';
 
+import { PROFILE_MAX_RATIO } from '@const';
 import Profile from '.';
 
 export default {
@@ -13,10 +14,10 @@ export default {
 export const base = () => {
   const imgUrl = text('imgUrl', '');
   const to = text('to', '/');
-  const ratio = number('ratio', 10, {
+  const ratio = number('ratio', PROFILE_MAX_RATIO, {
     range: true,
     min: 1,
-    max: 10,
+    max: PROFILE_MAX_RATIO,
     step: 0.25,
   });
 

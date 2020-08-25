@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as S from './styles';
+import { StyledSpan } from './styles';
 
 const propTypes = {
   type: PropTypes.string.isRequired,
@@ -12,7 +12,7 @@ const defaultProps = {
   ratio: 1,
 };
 
-const Icon = props => <S.Span {...props} />;
+const Icon = props => <StyledSpan {...props} />;
 
 Icon.propTypes = propTypes;
 Icon.defaultProps = defaultProps;

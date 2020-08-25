@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { prop, withProp } from 'styled-tools';
 
-import icon from './icon.png';
 import {
   ICON_LENGTH,
   ICON_TYPES,
@@ -10,7 +9,8 @@ import {
   ICON_LOGO_HEIGHT,
   ICON_LOGO_WIDTH,
   ICON_MAX_RATIO,
-} from '../../../../constants';
+} from '@const';
+import icon from './icon.png';
 
 const typeProp = prop('type');
 const ratioProp = prop('ratio');
@@ -31,7 +31,7 @@ const height = withProp([typeProp, ratioProp], (type, ratio) => {
   return `${(length * ratio) / ICON_MAX_RATIO}px`;
 });
 
-export const Span = styled.span`
+export const StyledSpan = styled.span`
   display: inline-block;
   background-repeat: no-repeat;
   background-image: url(${icon});
