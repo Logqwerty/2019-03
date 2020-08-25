@@ -11,6 +11,7 @@ module.exports = {
       '@atoms': path.resolve(ROOT, PATHS.atoms),
       '@molecules': path.resolve(ROOT, PATHS.molecules),
       '@organisms': path.resolve(ROOT, PATHS.organisms),
+      '@helpers': path.resolve(ROOT, PATHS.helpers),
     },
     extensions: ['.js', '.jsx', '.css', '.png', '.jpg', '.gif', '.jpeg'],
   },

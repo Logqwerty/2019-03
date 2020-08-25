@@ -6,7 +6,8 @@
       "@const": ["src/constants.js"],
       "@atoms": ["src/components/after/atoms"],
       "@molecules": ["src/components/after/molecules"],
-      "@organisms": ["src/components/after/organisms"]
+      "@organisms": ["src/components/after/organisms"],
+      "@helpers": ["src/helpers"]
     }
   }
 }
