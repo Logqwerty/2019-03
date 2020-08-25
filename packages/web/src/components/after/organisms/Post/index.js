@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Profile, Comment } from '@molecules';
+import { useToggleHeart } from './hooks';
 import {
   PostFlex,
   PostTopFlex,
@@ -51,6 +52,7 @@ const propTypes = {
 };
 
 const Post = ({ post }) => {
+  const { heartType, likerCount, onClickHeartIcon } = useToggleHeart(post);
   const {
     writer,
     imageURL,
@@ -58,10 +60,8 @@ const Post = ({ post }) => {
     postURL,
     commentCount,
     commentList,
-    likerInfo,
   } = post;
   const { username, profileImage } = writer;
-  const { likerCount } = likerInfo;
 
   return (
     <PostFlex direction="column">
@@ -72,7 +72,7 @@ const Post = ({ post }) => {
       </PostTopFlex>
       <PostImage src={imageURL} />
       <PostIconGroupFlex>
-        <HeartIcon />
+        <HeartIcon iconType={heartType} onClick={onClickHeartIcon} />
         <CommentIcon />
       </PostIconGroupFlex>
       <PostBottomFlex direction="column">

@@ -51,7 +51,6 @@ export const PostIconGroupFlex = styled(Flex)`
 `;
 
 export const HeartIcon = styled(IconButton).attrs(() => ({
-  iconType: ICON_TYPES.emptyHeart,
   ratio: 2.25,
 }))``;
 
