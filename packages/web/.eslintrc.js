@@ -10,5 +10,6 @@ module.exports = {
     'react/prop-types': 0,
     'import/prefer-default-export': 0,
     'eslint/no-param-reassign': 0,
+    'react/require-default-props': 0,
   },
 };
