@@ -9,5 +9,6 @@ module.exports = override(
     '@atoms': path.resolve(__dirname, PATHS.atoms),
     '@molecules': path.resolve(__dirname, PATHS.molecules),
     '@organisms': path.resolve(__dirname, PATHS.organisms),
+    '@helpers': path.resolve(__dirname, PATHS.helpers),
   }),
 );

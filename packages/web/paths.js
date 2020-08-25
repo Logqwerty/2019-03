@@ -11,6 +11,7 @@ const PATHS = Object.freeze({
   atoms: path.resolve(ROOT, 'src/components/after/atoms'),
   molecules: path.resolve(ROOT, 'src/components/after/molecules'),
   organisms: path.resolve(ROOT, 'src/components/after/organisms'),
+  helpers: path.resolve(ROOT, 'src/helpers'),
 });
 
 module.exports = PATHS;

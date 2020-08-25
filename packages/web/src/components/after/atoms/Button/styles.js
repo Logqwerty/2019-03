@@ -1,25 +1,24 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { palette, withProp, ifProp, prop } from 'styled-tools';
+import { palette, ifProp } from 'styled-tools';
 
+import { withPropHelper as withProp } from '@helpers';
 import {
   DEFAULT_FONT_SIZE,
   DEFAULT_FONT_WEIGHT,
   DEFAULT_UNIT,
 } from '../../../../constants';
 
-const withUnit = fn => withProp(prop('unit', DEFAULT_UNIT), fn);
-const withDisabledAndTransparent = fn =>
-  withProp([prop('disabled'), prop('transparent')], fn);
+const withButtonProps = withProp(['disabled', 'transparent', 'unit']);
 
-const bgColor = withDisabledAndTransparent((disabled, transparent) =>
+const bgColor = withButtonProps((disabled, transparent) =>
   transparent ? 'transparent' : palette('primary', disabled ? 0 : 2),
 );
-const color = withDisabledAndTransparent((disabled, transparent) => {
+const color = withButtonProps((disabled, transparent) => {
   if (transparent) return palette('primary', disabled ? 0 : 2);
   return disabled ? palette('grayscale', 2) : palette('white');
 });
-const borderColor = withDisabledAndTransparent(disabled =>
+const borderColor = withButtonProps(disabled =>
   palette('primary', disabled ? 0 : 2),
 );
 
@@ -35,17 +34,17 @@ const styles = css`
   padding: ${ifProp(
     'onlyContent',
     '0px',
-    withUnit(unit => `${unit * 2}px`),
+    withButtonProps((_, __, unit = DEFAULT_UNIT) => `${unit * 2}px`),
   )};
   padding-left: ${ifProp(
     'onlyContent',
     '0px',
-    withUnit(unit => `${unit * 4}px`),
+    withButtonProps((_, __, unit) => `${unit * 4}px`),
   )};
   padding-right: ${ifProp(
     'onlyContent',
     '0px',
-    withUnit(unit => `${unit * 4}px`),
+    withButtonProps((_, __, unit) => `${unit * 4}px`),
   )};
 
   text-decoration: none;
