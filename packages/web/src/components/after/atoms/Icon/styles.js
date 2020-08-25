@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { prop, withProp } from 'styled-tools';
 
+import { withPropHelper as withProp } from '@helpers';
 import {
   ICON_LENGTH,
   ICON_TYPES,
@@ -12,21 +12,20 @@ import {
 } from '@const';
 import icon from './icon.png';
 
-const typeProp = prop('type');
-const ratioProp = prop('ratio');
-const bgSize = withProp(
-  ratioProp,
-  ratio => `${(ICON_IMAGE_LENGTH * ratio) / ICON_MAX_RATIO}px`,
+const withIconProps = withProp(['type', 'ratio']);
+
+const bgSize = withIconProps(
+  (_, ratio) => `${(ICON_IMAGE_LENGTH * ratio) / ICON_MAX_RATIO}px`,
 );
-const bgPosition = withProp([typeProp, ratioProp], (type, ratio) => {
+const bgPosition = withIconProps((type, ratio) => {
   const { x, y } = ICON_POSITIONS[type];
   return `${(x * ratio) / ICON_MAX_RATIO}px ${(y * ratio) / ICON_MAX_RATIO}px`;
 });
-const width = withProp([typeProp, ratioProp], (type, ratio) => {
+const width = withIconProps((type, ratio) => {
   const length = type === ICON_TYPES.logo ? ICON_LOGO_WIDTH : ICON_LENGTH;
   return `${(length * ratio) / ICON_MAX_RATIO}px`;
 });
-const height = withProp([typeProp, ratioProp], (type, ratio) => {
+const height = withIconProps((type, ratio) => {
   const length = type === ICON_TYPES.logo ? ICON_LOGO_HEIGHT : ICON_LENGTH;
   return `${(length * ratio) / ICON_MAX_RATIO}px`;
 });

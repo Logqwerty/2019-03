@@ -1,14 +1,15 @@
 import styled from 'styled-components';
-import { prop, palette, withProp } from 'styled-tools';
+import { palette } from 'styled-tools';
 
+import { withPropHelper as withProp } from '@helpers';
 import { DEFAULT_FONT_SIZE, DEFAULT_UNIT } from '../../../../constants';
 
-const withUnit = fn => withProp(prop('unit', DEFAULT_UNIT), fn);
+const withUnit = withProp(['unit']);
 
 export const StyledInput = styled.input`
   width: 100%;
   margin: 0;
-  padding: ${withUnit(unit => `${unit * 2}px ${unit * 2}px`)};
+  padding: ${withUnit((unit = DEFAULT_UNIT) => `${unit * 2}px ${unit * 2}px`)};
   border: 1px solid ${palette('border')};
   box-sizing: border-box;
 
