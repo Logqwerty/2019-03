@@ -82,7 +82,7 @@ const Post = ({ post, myInfo }) => {
       <PostImage src={imageURL} />
       <PostIconGroupFlex>
         <HeartIcon iconType={heartType} onClick={onClickHeartIcon} />
-        <CommentIcon />
+        <CommentIcon to={`/p/${postURL}`} />
       </PostIconGroupFlex>
       <PostBottomFlex direction="column">
         {likerCount > 0 && (
