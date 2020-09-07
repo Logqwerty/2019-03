@@ -4,6 +4,10 @@ import StoryRouter from 'storybook-react-router';
 
 import Post from '.';
 
+const myInfo = {
+  id: '1000',
+};
+
 const post = {
   id: '1000',
   imageURL: 'https://picsum.photos/id/1003/1181/1772',
@@ -44,5 +48,5 @@ export default {
 };
 
 export const base = () => {
-  return <Post post={post} />;
+  return <Post post={post} myInfo={myInfo} />;
 };

@@ -49,10 +49,19 @@ const propTypes = {
       }),
     ),
   }),
+  myInfo: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    profileImage: PropTypes.string,
+  }),
 };
 
-const Post = ({ post }) => {
-  const { heartType, likerCount, onClickHeartIcon } = useToggleHeart(post);
+const Post = ({ post, myInfo }) => {
+  const { heartType, likerCount, onClickHeartIcon } = useToggleHeart(
+    post,
+    myInfo,
+  );
   const {
     writer,
     imageURL,
