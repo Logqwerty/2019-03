@@ -5,13 +5,17 @@ import { Wrapper, Overlay } from './styles';
 
 const propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  onCloseModal: PropTypes.func.isRequired,
 };
 
-const Modal = ({ isOpen, children }) => {
+const Modal = ({ isOpen, onCloseModal, className, children }) => {
+  const onClickWrapper = e => e.stopPropagation();
   return (
     isOpen && (
-      <Overlay>
-        <Wrapper>{children}</Wrapper>
+      <Overlay onClick={onCloseModal}>
+        <Wrapper onClick={onClickWrapper} className={className}>
+          {children}
+        </Wrapper>
       </Overlay>
     )
   );
