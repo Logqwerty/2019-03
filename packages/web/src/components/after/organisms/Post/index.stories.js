@@ -2,10 +2,12 @@ import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import StoryRouter from 'storybook-react-router';
 
+import { ModalProvider } from '../../../../contexts';
 import Post from '.';
 
 const myInfo = {
   id: '1000',
+  username: '__sloth_92',
 };
 
 const post = {
@@ -48,5 +50,9 @@ export default {
 };
 
 export const base = () => {
-  return <Post post={post} myInfo={myInfo} />;
+  return (
+    <ModalProvider>
+      <Post post={post} myInfo={myInfo} />
+    </ModalProvider>
+  );
 };

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Profile, Comment } from '@molecules';
+import { Profile, Comment, PostModal } from '@molecules';
 import { useToggleHeart } from './hooks';
+import { useModalContext } from '../../../../contexts';
 import {
   PostFlex,
   PostTopFlex,
@@ -52,12 +53,13 @@ const propTypes = {
   myInfo: PropTypes.shape({
     id: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
     profileImage: PropTypes.string,
   }),
 };
 
 const Post = ({ post, myInfo }) => {
+  const { isOpen, onOpenModal, onCloseModal } = useModalContext();
   const { heartType, likerCount, onClickHeartIcon } = useToggleHeart(
     post,
     myInfo,
@@ -70,14 +72,21 @@ const Post = ({ post, myInfo }) => {
     commentCount,
     commentList,
   } = post;
-  const { username, profileImage } = writer;
+  const { username: writerName, profileImage } = writer;
+  const { username: myName } = myInfo;
 
   return (
     <PostFlex direction="column">
       <PostTopFlex verticalAlign="center">
         <Profile imgUrl={profileImage} ratio={10} />
-        <Username to={`/${username}`}>{username}</Username>
-        <EllipsisIcon />
+        <Username to={`/${writerName}`}>{writerName}</Username>
+        <EllipsisIcon onClick={onOpenModal} />
+        <PostModal
+          isOpen={isOpen}
+          onCloseModal={onCloseModal}
+          postURL={postURL}
+          isMine={myName === writerName}
+        />
       </PostTopFlex>
       <PostImage src={imageURL} />
       <PostIconGroupFlex>

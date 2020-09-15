@@ -28,6 +28,12 @@ export const POST_IMAGE_HEIGHT = 615;
 export const PROFILE_LENGTH = 32;
 export const PROFILE_MAX_RATIO = 10;
 
+export const MODAL_MENU_POSITION = Object.freeze({
+  top: 'top',
+  middle: 'middle',
+  bottom: 'bottom',
+});
+
 export const ICON_IMAGE_LENGTH = 1000;
 export const ICON_LENGTH = 125;
 export const ICON_LOGO_WIDTH = 1000;
