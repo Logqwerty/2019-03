@@ -2,6 +2,9 @@ export const DEFAULT_UNIT = 3;
 export const DEFAULT_FONT_SIZE = 14;
 export const DEFAULT_FONT_WEIGHT = 600;
 
+export const DEFAULT_SPINNER_SIZE = '32px';
+export const DEFAULT_SPINNER_WIDTH = '5px';
+
 export const FLEX_DIRECTION = Object.freeze({
   row: 'row',
   col: 'column',
