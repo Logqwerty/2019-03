@@ -6,13 +6,20 @@ import { SpinnerWrapper, SpinnerContent } from './styles';
 const propTypes = {
   size: PropTypes.string,
   width: PropTypes.string,
-  color: PropTypes.string,
+  foreColor: PropTypes.string,
+  backColor: PropTypes.string,
+  reverse: PropTypes.bool,
 };
 
-const Spinner = ({ size, width, color }) => {
+const Spinner = ({ size, width, foreColor, backColor, reverse, className }) => {
   return (
-    <SpinnerWrapper size={size}>
-      <SpinnerContent width={width} color={color} />
+    <SpinnerWrapper size={size} className={className}>
+      <SpinnerContent
+        width={width}
+        foreColor={foreColor}
+        backColor={backColor}
+        reverse={reverse}
+      />
     </SpinnerWrapper>
   );
 };
