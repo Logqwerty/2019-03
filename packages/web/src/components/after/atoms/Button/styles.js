@@ -39,12 +39,12 @@ const styles = css`
   padding-left: ${ifProp(
     'onlyContent',
     '0px',
-    withButtonProps((_, __, unit) => `${unit * 4}px`),
+    withButtonProps((_, __, unit = DEFAULT_UNIT) => `${unit * 4}px`),
   )};
   padding-right: ${ifProp(
     'onlyContent',
     '0px',
-    withButtonProps((_, __, unit) => `${unit * 4}px`),
+    withButtonProps((_, __, unit = DEFAULT_UNIT) => `${unit * 4}px`),
   )};
 
   text-decoration: none;
