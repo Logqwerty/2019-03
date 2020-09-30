@@ -67,6 +67,7 @@ export const ICON_TYPES = Object.freeze({
   clear: 'clear',
   logout: 'logout',
   hashtag: 'hashtag',
+  cancel: 'cancel',
 });
 
 export const ICON_POSITIONS = Object.freeze({
@@ -117,5 +118,9 @@ export const ICON_POSITIONS = Object.freeze({
   hashtag: {
     x: -130,
     y: -634,
+  },
+  cancel: {
+    x: -523,
+    y: -627,
   },
 });

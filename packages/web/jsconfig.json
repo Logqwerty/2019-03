@@ -7,7 +7,9 @@
       "@atoms": ["src/components/after/atoms"],
       "@molecules": ["src/components/after/molecules"],
       "@organisms": ["src/components/after/organisms"],
-      "@helpers": ["src/helpers"]
+      "@helpers": ["src/helpers"],
+      "@contexts": ["src/contexts"],
+      "@fixtures": ["src/__test__/fixtures"]
     }
   }
 }

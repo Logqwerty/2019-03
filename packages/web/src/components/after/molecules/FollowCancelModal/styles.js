@@ -1,16 +1,15 @@
 import styled from 'styled-components';
 import { palette } from 'styled-tools';
 
-import { Image, Flex, Modal, ModalMenu } from '@atoms';
+import { Flex, Modal, ModalMenu } from '@atoms';
+import { Profile } from '@molecules';
 import { FLEX_ALIGN, FLEX_DIRECTION } from '@const';
 
 export const StyledModal = styled(Modal)`
   width: 400px;
 `;
 
-export const ProfileImage = styled(Image).attrs(() => ({
-  round: true,
-}))`
+export const StyledProfile = styled(Profile)`
   width: 90px;
   height: 90px;
   margin: 32px 32px 16px;

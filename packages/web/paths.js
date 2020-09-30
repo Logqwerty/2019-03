@@ -12,6 +12,8 @@ const PATHS = Object.freeze({
   molecules: path.resolve(ROOT, 'src/components/after/molecules'),
   organisms: path.resolve(ROOT, 'src/components/after/organisms'),
   helpers: path.resolve(ROOT, 'src/helpers'),
+  contexts: path.resolve(ROOT, 'src/contexts'),
+  fixtures: path.resolve(ROOT, 'src/__test__/fixtures'),
 });
 
 module.exports = PATHS;

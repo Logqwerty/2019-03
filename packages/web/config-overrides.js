@@ -10,5 +10,7 @@ module.exports = override(
     '@molecules': path.resolve(__dirname, PATHS.molecules),
     '@organisms': path.resolve(__dirname, PATHS.organisms),
     '@helpers': path.resolve(__dirname, PATHS.helpers),
+    '@contexts': path.resolve(__dirname, PATHS.contexts),
+    '@fixtures': path.resolve(__dirname, PATHS.fixtures),
   }),
 );
