@@ -37,6 +37,16 @@ export const MODAL_MENU_POSITION = Object.freeze({
   bottom: 'bottom',
 });
 
+export const FOLLOW_STATUS = Object.freeze({
+  following: 0,
+  none: 2,
+});
+
+export const FOLLOW_STATUS_TEXT = Object.freeze({
+  [FOLLOW_STATUS.none]: '팔로우',
+  [FOLLOW_STATUS.following]: '팔로잉',
+});
+
 export const ICON_IMAGE_LENGTH = 1000;
 export const ICON_LENGTH = 125;
 export const ICON_LOGO_WIDTH = 1000;

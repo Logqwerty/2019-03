@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { prop, palette } from 'styled-tools';
+import { prop, ifProp, palette } from 'styled-tools';
 
 import {
   DEFAULT_SPINNER_SIZE,
@@ -7,7 +7,16 @@ import {
 } from '../../../../constants';
 
 const borderWidth = prop('width', DEFAULT_SPINNER_WIDTH);
-const borderColor = prop('color', palette('primary', 2));
+const foreColor = ifProp(
+  'reverse',
+  prop('backColor', palette('grayscale', 1)),
+  prop('foreColor', palette('primary', 2)),
+);
+const backColor = ifProp(
+  'reverse',
+  prop('foreColor', palette('primary', 2)),
+  prop('backColor', palette('grayscale', 1)),
+);
 
 export const SpinnerWrapper = styled.div`
   width: ${prop('size', DEFAULT_SPINNER_SIZE)};
@@ -19,10 +28,10 @@ export const SpinnerContent = styled.div`
   height: 100%;
   box-sizing: border-box;
   border-radius: 50%;
-  border: ${borderWidth} solid ${palette('grayscale', 1)};
-  border-top: ${borderWidth} solid ${borderColor};
-  border-bottom: ${borderWidth} solid ${borderColor};
-  border-left: ${borderWidth} solid ${borderColor};
+  border: ${borderWidth} solid ${backColor};
+  border-top: ${borderWidth} solid ${foreColor};
+  border-bottom: ${borderWidth} solid ${foreColor};
+  border-left: ${borderWidth} solid ${foreColor};
 
   animation: spin 1s linear infinite;
   @keyframes spin {

@@ -42,6 +42,13 @@ const typeDefs = gql`
     likerInfo: LikerInfo
   }
 
+  type UserFollower {
+    from: ID
+    to: ID
+    status: Int
+    updatedAt: String
+  }
+
   type Query {
     dummy: String
   }
@@ -50,6 +57,8 @@ const typeDefs = gql`
     createPostLike(PostId: ID!, WriterId: ID!, UserId: ID!): ID
     deletePostLike(PostId: ID!, UserId: ID!): ID
     deletePost(postURL: String!): Post
+    RequestFollowing(myId: ID!, userId: ID!): UserFollower
+    RequestFollowingCancellation(myId: ID!, userId: ID!): UserFollower
   }
 `;
 
