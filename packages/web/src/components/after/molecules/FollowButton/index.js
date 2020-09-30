@@ -11,7 +11,7 @@ const propTypes = {
   myId: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
-  profileImage: PropTypes.string.isRequired,
+  profileImage: PropTypes.string,
 };
 
 const FollowButton = ({

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ModalMenu } from '@atoms';
 import { MODAL_MENU_POSITION } from '@const';
 import {
-  ProfileImage,
+  StyledProfile,
   ModalTopFlex,
   CancelMessage,
   StyledModal,
@@ -29,7 +29,7 @@ const FollowCancelModal = ({
   return (
     <StyledModal isOpen={isOpen} onCloseModal={onCloseModal}>
       <ModalTopFlex>
-        <ProfileImage src={profileImage} round />
+        <StyledProfile imgUrl={profileImage} />
         <CancelMessage>@{username}님의 팔로우를 취소하시겠어요?</CancelMessage>
       </ModalTopFlex>
       <FollowCancelMenu onClick={onCancelFollowing} danger>

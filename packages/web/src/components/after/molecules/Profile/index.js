@@ -9,16 +9,29 @@ import { ProfileLink } from './styles';
 const propTypes = {
   imgUrl: PropTypes.string,
   ratio: PropTypes.number,
+  href: PropTypes.string,
+  to: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+    PropTypes.shape({
+      pathname: PropTypes.string,
+      search: PropTypes.string,
+      hash: PropTypes.string,
+      state: PropTypes.object,
+    }),
+  ]),
 };
 
 const defaultProps = {
   ratio: PROFILE_MAX_RATIO,
 };
 
-const Profile = ({ ratio, imgUrl, className, ...linkProps }) => {
+const Profile = ({ ratio, imgUrl, to, href, className }) => {
+  const imgSrc = imgUrl || defaultProfileImage;
+  if (!to && !href) return <Image src={imgSrc} className={className} round />;
   return (
-    <ProfileLink ratio={ratio} className={className} {...linkProps}>
-      <Image src={imgUrl || defaultProfileImage} round />
+    <ProfileLink to={to} href={href} ratio={ratio} className={className}>
+      <Image src={imgSrc} round />
     </ProfileLink>
   );
 };
