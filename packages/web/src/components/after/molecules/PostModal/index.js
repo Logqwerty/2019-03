@@ -18,7 +18,7 @@ const PostModal = ({ isOpen, onCloseModal, isMine, postURL }) => {
 
   if (isDeleted) return <Redirect to="/" />;
   return (
-    <Modal isOpen={isOpen}>
+    <Modal isOpen={isOpen} onCloseModal={onCloseModal}>
       {isMine && (
         <>
           <ModalMenu position={MODAL_MENU_POSITION.top} to={`/edit/${postURL}`}>
