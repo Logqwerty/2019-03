@@ -32,14 +32,30 @@ const defaultProps = {
   onClick: () => {},
 };
 
-const Button = ({ to, href, type, onClick, ...props }) => {
+const Button = ({
+  to,
+  href,
+  type,
+  transparent,
+  onlyContent,
+  onClick,
+  ...props
+}) => {
   if (to) {
-    return <StyledLink to={to} {...props} />;
+    return <StyledLink to={to} transparent onlyContent {...props} />;
   }
   if (href) {
-    return <StyledAnchor href={href} {...props} />;
+    return <StyledAnchor href={href} transparent onlyContent {...props} />;
   }
-  return <StyledButton type={type} onClick={onClick} {...props} />;
+  return (
+    <StyledButton
+      type={type}
+      transparent={transparent}
+      onlyContent={onlyContent}
+      onClick={onClick}
+      {...props}
+    />
+  );
 };
 
 Button.propTypes = propTypes;

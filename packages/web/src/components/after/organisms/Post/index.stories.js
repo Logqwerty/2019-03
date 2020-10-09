@@ -12,7 +12,8 @@ const myInfo = {
 
 const post = {
   id: '1000',
-  imageURL: 'https://picsum.photos/id/1003/1181/1772',
+  imageURL:
+    'https://youngstar-storage.s3.ap-northeast-2.amazonaws.com/post/cat_0000.jpg',
   postURL: 'm8k81a',
   content: 'this is a test post.',
   isLike: true,
@@ -20,7 +21,8 @@ const post = {
   writer: {
     id: '100',
     username: '__sloth_92',
-    profileImage: 'https://i.pravatar.cc/150?img=1',
+    profileImage:
+      'https://youngstar-storage.s3.ap-northeast-2.amazonaws.com/profiles/profile_0000.jpg',
   },
   commentCount: 3,
   commentList: [

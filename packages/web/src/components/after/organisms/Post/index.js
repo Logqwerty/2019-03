@@ -1,25 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Profile, Comment, PostModal } from '@molecules';
+import { Comment as MainComment } from '@molecules';
+import { PostHead, PostLikerCount, PostComments } from '@organisms';
+import { ModalProvider } from '@contexts';
 import { useToggleHeart } from './hooks';
-import { useModalContext } from '../../../../contexts';
 import {
   PostFlex,
-  PostTopFlex,
   PostIconGroupFlex,
   PostBottomFlex,
-  Username,
   PostImage,
-  EllipsisIcon,
   HeartIcon,
   CommentIcon,
-  LikeInformation,
-  ShowMoreComments,
   StyledCommentInput as CommentInput,
+  StyledTimePassedText as TimePassedText,
 } from './styles';
-
-const MainComment = Comment;
 
 const propTypes = {
   post: PropTypes.shape({
@@ -59,59 +54,44 @@ const propTypes = {
 };
 
 const Post = ({ post, myInfo }) => {
-  const { isOpen, onOpenModal, onCloseModal } = useModalContext();
+  const [comments, setComments] = useState(post.commentList);
   const { heartType, likerCount, onClickHeartIcon } = useToggleHeart(
     post,
     myInfo,
   );
-  const {
-    writer,
-    imageURL,
-    content,
-    postURL,
-    commentCount,
-    commentList,
-  } = post;
-  const { username: writerName, profileImage } = writer;
-  const { username: myName } = myInfo;
+  const { id: postId, writer, imageURL, content, postURL, updatedAt } = post;
+  const { id: writerId, username: writerName, profileImage } = writer;
+  const { id: myId, username: myName } = myInfo;
 
   return (
-    <PostFlex direction="column">
-      <PostTopFlex verticalAlign="center">
-        <Profile imgUrl={profileImage} ratio={10} />
-        <Username to={`/${writerName}`}>{writerName}</Username>
-        <EllipsisIcon onClick={onOpenModal} />
-        <PostModal
-          isOpen={isOpen}
-          onCloseModal={onCloseModal}
+    <PostFlex>
+      <ModalProvider>
+        <PostHead
+          writerName={writerName}
+          profileImage={profileImage}
           postURL={postURL}
           isMine={myName === writerName}
         />
-      </PostTopFlex>
+      </ModalProvider>
       <PostImage src={imageURL} />
       <PostIconGroupFlex>
         <HeartIcon iconType={heartType} onClick={onClickHeartIcon} />
         <CommentIcon to={`/p/${postURL}`} />
       </PostIconGroupFlex>
-      <PostBottomFlex direction="column">
-        {likerCount > 0 && (
-          <LikeInformation>좋아요 {likerCount}개</LikeInformation>
-        )}
+      <PostBottomFlex>
+        <ModalProvider>
+          <PostLikerCount likerCount={likerCount} myId={myId} postId={postId} />
+        </ModalProvider>
         <MainComment writer={writer} contents={content} />
-        {commentCount >= 3 && (
-          <ShowMoreComments to={`/p/${postURL}`}>
-            댓글 {commentCount}개 모두 보기
-          </ShowMoreComments>
-        )}
-        {commentList.map(({ writer: commenter, content: commentContents }) => (
-          <Comment
-            key={commenter.username}
-            writer={commenter}
-            contents={commentContents}
-          />
-        ))}
+        <PostComments postURL={postURL} comments={comments} />
       </PostBottomFlex>
-      <CommentInput />
+      <TimePassedText updatedAt={updatedAt} />
+      <CommentInput
+        writerId={writerId}
+        postId={postId}
+        myInfo={myInfo}
+        setComments={setComments}
+      />
     </PostFlex>
   );
 };
