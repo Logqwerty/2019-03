@@ -38,8 +38,8 @@ export const MODAL_MENU_POSITION = Object.freeze({
 });
 
 export const FOLLOW_STATUS = Object.freeze({
-  following: 0,
-  none: 2,
+  following: 1,
+  none: 0,
 });
 
 export const FOLLOW_STATUS_TEXT = Object.freeze({

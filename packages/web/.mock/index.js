@@ -1,13 +1,14 @@
-const { ApolloServer, gql } = require('apollo-server');
-const typeDefs = require('./type-defs');
-const mocks = require('./mock-resolvers');
+import { ApolloServer } from 'apollo-server';
+
+import typeDefs from './type-defs';
+import mockResolvers from './mock-resolvers';
 
 const resolvers = {};
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  mocks,
+  mocks: mockResolvers,
 });
 
 server
