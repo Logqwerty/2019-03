@@ -1,13 +1,26 @@
+const S3_URL =
+  'https://youngstar-storage.s3.ap-northeast-2.amazonaws.com/profiles';
+
+const addPrefixZero = (num, maxLength = 4) => {
+  const digits = [...num.toString()];
+  let iter = maxLength - digits.length;
+  while (iter > 0) {
+    iter -= 1;
+    digits.unshift('0');
+  }
+  return digits.join('');
+};
+
 module.exports = {
   up: queryInterface => {
     const userInfo = [
       {
-        username: '_so_02',
-        password: 'password',
+        username: 'tester1',
+        password: 'test123A!',
         email: 'hana@gmail.com',
-        name: '정소영',
+        name: '테스터',
         cellPhone: '000-0000-0000',
-        profileImage: 'https://i.pravatar.cc/150?img=9',
+        profileImage: `${S3_URL}/profile_0800.jpg`,
         isPrivate: 0,
         isFacebook: 0,
         isDeveloper: 0,
@@ -44,7 +57,7 @@ module.exports = {
           korean[Math.floor(Math.random() * korean.length)]
         }${korean[Math.floor(Math.random() * korean.length)]}`,
         cellPhone: '000-0000-0000',
-        profileImage: `https://i.pravatar.cc/150?img=${i}`,
+        profileImage: `${S3_URL}/profile_${addPrefixZero(i)}.jpg`,
         isPrivate: 0,
         isFacebook: 0,
         isDeveloper: 0,
