@@ -2,8 +2,9 @@ import React from 'react';
 import { withKnobs, text } from '@storybook/addon-knobs';
 
 import { Button } from '@atoms';
+import { ModalProvider, useModalContext } from '@contexts';
+import { profileImage as profileImageFixture } from '@fixtures';
 import FollowCancelModal from '.';
-import { ModalProvider, useModalContext } from '../../../../contexts';
 
 export default {
   title: 'components/molecules/FollowCancelModal',
@@ -14,12 +15,9 @@ export default {
 const FollowCancleModalExample = () => {
   const { isOpen, onCloseModal, onOpenModal } = useModalContext();
 
-  const onCancelFollow = onCloseModal;
+  const onCancelFollowing = onCloseModal;
   const username = text('username', 'tester');
-  const profileImage = text(
-    'profileImage',
-    'https://picsum.photos/id/1003/1181/1772',
-  );
+  const profileImage = text('profileImage', profileImageFixture);
 
   return (
     <>
@@ -27,7 +25,7 @@ const FollowCancleModalExample = () => {
       <FollowCancelModal
         isOpen={isOpen}
         onCloseModal={onCloseModal}
-        onCancelFollow={onCancelFollow}
+        onCancelFollowing={onCancelFollowing}
         username={username}
         profileImage={profileImage}
       />
