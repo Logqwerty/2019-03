@@ -6,26 +6,25 @@ const {
 } = require('graphql');
 
 const LikerType = new GraphQLObjectType({
-  name: 'LikerType',
+  name: 'Liker',
   fields: () => ({
     id: {
       type: GraphQLID,
     },
     username: {
       type: GraphQLString,
-      resolve: ({ User }) => User.username,
     },
     name: {
       type: GraphQLString,
-      resolve: ({ User }) => User.name,
     },
     profileImage: {
       type: GraphQLString,
-      resolve: ({ User }) => User.profileImage,
     },
-    followStatus: {
+    isFollow: {
       type: GraphQLInt,
-      resolve: () => 0,
+    },
+    likedAt: {
+      type: GraphQLString,
     },
   }),
 });

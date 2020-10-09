@@ -1,4 +1,8 @@
-const { UserFollow, Log } = require('../../db');
+const {
+  UserFollow,
+  Log,
+  Sequelize: { Op },
+} = require('../../db');
 const { errorName } = require('../../error');
 
 const insertFollow = async (myId, userId) => {
@@ -58,4 +62,25 @@ const destroyFollowCancellationData = async ({ myId, userId }) => {
   }
 };
 
-module.exports = { destroyFollowCancellationData, createFollowData };
+const setIsFollowPropOfUsers = async ({ from, users }) => {
+  const userIds = users.map(({ id }) => id);
+  const result = await UserFollow.findAll({
+    attributes: ['to'],
+    where: {
+      from,
+      to: { [Op.in]: userIds },
+    },
+    order: [['updatedAt', 'DESC']],
+  });
+  const updatedUsers = users.map(user => {
+    const isFollow = result.find(({ to }) => user.id === to);
+    return { ...user, isFollow: !!isFollow };
+  });
+  return updatedUsers;
+};
+
+module.exports = {
+  destroyFollowCancellationData,
+  createFollowData,
+  setIsFollowPropOfUsers,
+};
