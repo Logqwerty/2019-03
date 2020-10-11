@@ -1,8 +1,9 @@
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 
+import { FOLLOW_STATUS } from '@const';
+import { ModalProvider } from '@contexts';
 import FollowButton from '.';
-import { ModalProvider } from '../../../../contexts';
 
 export default {
   title: 'components/molecules/FollowButton',
@@ -16,7 +17,7 @@ export const base = () => {
       <FollowButton
         myId="1"
         userId="2"
-        followStatus={null}
+        followStatus={FOLLOW_STATUS.none}
         username="tester"
         profileImage="https://picsum.photos/id/1003/1181/1772"
       />
