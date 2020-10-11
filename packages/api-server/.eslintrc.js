@@ -10,5 +10,6 @@ module.exports = {
   plugins: ['import', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
+    'no-param-reassign': 'off',
   },
 };

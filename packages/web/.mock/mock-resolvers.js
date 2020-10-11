@@ -1,7 +1,5 @@
-const FOLLOW_STATUS = Object.freeze({
-  following: 0,
-  none: 2,
-});
+import { FOLLOW_STATUS } from '../src/constants';
+import { rawLikers } from '../src/__test__/fixtures';
 
 const delay = (sec = 1) => {
   return new Promise(resolve =>
@@ -49,8 +47,20 @@ const RequestFollowingCancellation = async (_, args) => {
   };
 };
 
-module.exports = {
+const likerList = async (_, args) => {
+  console.info(`[likerList] arg: ${JSON.stringify(args, null, 2)}`);
+  await delay();
+  const { cursor, limit } = args;
+  return rawLikers
+    .filter(({ likedAt }) => (cursor || Date.now()) > +likedAt)
+    .slice(0, limit);
+};
+
+export default {
   String: () => 'Hello, World!',
+  Query: () => ({
+    likerList,
+  }),
   Mutation: () => ({
     createPostLike,
     deletePostLike,

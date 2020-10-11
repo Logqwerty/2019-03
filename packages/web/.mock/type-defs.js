@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+import { gql } from 'apollo-server';
 
 const typeDefs = gql`
   type User {
@@ -49,8 +49,17 @@ const typeDefs = gql`
     updatedAt: String
   }
 
+  type Liker {
+    id: ID
+    username: String
+    name: String
+    profileImage: String
+    isFollow: Int
+    likedAt: String
+  }
+
   type Query {
-    dummy: String
+    likerList(myId: ID!, postId: ID!, cursor: String, limit: Int): [Liker]
   }
 
   type Mutation {
@@ -62,4 +71,4 @@ const typeDefs = gql`
   }
 `;
 
-module.exports = typeDefs;
+export default typeDefs;

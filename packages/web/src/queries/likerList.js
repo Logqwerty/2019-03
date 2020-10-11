@@ -1,13 +1,14 @@
 import { gql } from 'apollo-boost';
 
 const LIKER_LIST = gql`
-  query LikerList($postId: ID!) {
-    likerList(postId: $postId) {
+  query LikerList($myId: ID!, $postId: ID!, $cursor: String, $limit: Int) {
+    likerList(myId: $myId, postId: $postId, cursor: $cursor, limit: $limit) {
       id
       username
       name
       profileImage
-      followStatus
+      isFollow
+      likedAt
     }
   }
 `;

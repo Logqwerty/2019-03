@@ -1,5 +1,4 @@
 const express = require('express');
-const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
@@ -52,10 +51,6 @@ app.use(
     customFormatErrorFn: err => formatError.getError(err),
   }),
 );
-
-app.use((req, res, next) => {
-  next(createError(404));
-});
 
 app.use((err, req, res, next) => {
   if (err.status === 404) {

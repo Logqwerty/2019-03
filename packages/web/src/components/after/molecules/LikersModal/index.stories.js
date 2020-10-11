@@ -4,7 +4,6 @@ import StoryRouter from 'storybook-react-router';
 
 import { Button } from '@atoms';
 import { ModalProvider, useModalContext } from '@contexts';
-import { likers } from '@fixtures';
 import LikersModal from '.';
 
 export default {
@@ -20,9 +19,10 @@ const LikersModalExample = () => {
     <>
       <Button onClick={onOpenModal}>모달 열기</Button>
       <LikersModal
-        likers={likers}
         onCloseModal={onCloseModal}
         isOpen={isOpen}
+        myId="1"
+        postId="1"
       />
     </>
   );

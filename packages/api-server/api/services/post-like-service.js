@@ -1,4 +1,9 @@
-const { User, PostLike, Log } = require('../../db');
+const {
+  User,
+  PostLike,
+  Log,
+  Sequelize: { Op },
+} = require('../../db');
 const { errorName } = require('../../error');
 
 async function checkUserLikePost(userId, postId) {
@@ -43,19 +48,40 @@ async function getLikerInfo(postId) {
   }
 }
 
-async function getLikerList(postId) {
+const isOnlyDigits = str => /^\d+$/g.test(str);
+
+async function getLikerList(PostId, cursor, limit = 10) {
   try {
-    const likerList = await PostLike.findAll({
-      attributes: ['id'],
-      where: { PostId: postId },
+    const result = await PostLike.findAll({
+      attributes: ['id', 'updatedAt'],
+      where: {
+        PostId,
+        updatedAt: {
+          [Op.lt]: new Date(isOnlyDigits(cursor) ? +cursor : cursor),
+        },
+      },
       include: {
         model: User,
-        attributes: ['username', 'name', 'profileImage'],
+        attributes: ['id', 'username', 'name', 'profileImage'],
       },
       order: [['updatedAt', 'DESC']],
+      limit,
     });
 
-    return likerList;
+    const likerList = result.map(
+      ({ updatedAt, User: { id, username, name, profileImage } }) => ({
+        id,
+        username,
+        name,
+        profileImage,
+        likedAt: updatedAt,
+      }),
+    );
+
+    return {
+      postId: PostId,
+      likerList,
+    };
   } catch (err) {
     throw new Error(errorName.POST_LIKE_ERROR);
   }

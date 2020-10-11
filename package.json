@@ -8,6 +8,7 @@
     "packages/*"
   ],
   "scripts": {
-    "storybook": "yarn --cwd packages/web storybook"
+    "mock": "yarn workspace @youngstar/web mock",
+    "storybook": "yarn workspace @youngstar/web storybook"
   }
 }

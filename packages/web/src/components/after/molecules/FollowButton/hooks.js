@@ -33,9 +33,7 @@ const useMutateFollowing = (query, setFollowStatus) => {
 
 export const useFollowButton = ({ followStatus, myId, userId }) => {
   const { isOpen: isModalOpen, onOpenModal, onCloseModal } = useModalContext();
-  const [curFollowStatus, setFollowStatus] = useState(
-    followStatus === null ? FOLLOW_STATUS.none : followStatus,
-  );
+  const [curFollowStatus, setFollowStatus] = useState(followStatus);
   const {
     mutateFollowing: requestFollowing,
     loading: followingLoading,
