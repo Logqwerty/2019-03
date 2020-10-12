@@ -7,3 +7,4 @@ export { default as FolloCancelModal } from './FollowCancelModal';
 export { default as FollowButton } from './FollowButton';
 export { default as Liker } from './Liker';
 export { default as LikersModal } from './LikersModal';
+export { default as ScrollableContainer } from './ScrollableContainer';
