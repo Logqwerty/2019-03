@@ -3,7 +3,11 @@ import { LIKER_LIST } from '../../../../queries';
 
 const DEFAULT_LIMIT = 10;
 
-const makeVariables = (myId, postId, limit = DEFAULT_LIMIT) => cursor => ({
+const makePartialVariables = (
+  myId,
+  postId,
+  limit = DEFAULT_LIMIT,
+) => cursor => ({
   myId,
   postId,
   cursor,
@@ -11,7 +15,7 @@ const makeVariables = (myId, postId, limit = DEFAULT_LIMIT) => cursor => ({
 });
 
 export const useFetchLikers = (myId, postId) => {
-  const partialVariables = makeVariables(myId, postId);
+  const partialVariables = makePartialVariables(myId, postId);
   const initVariables = partialVariables(null);
 
   const { data, loading, fetchMore } = useQuery(LIKER_LIST, {
@@ -37,7 +41,7 @@ export const useFetchLikers = (myId, postId) => {
 
   return {
     likers,
-    initIsLoading: loading,
+    initLoading: loading,
     fetchMoreLikers,
   };
 };
