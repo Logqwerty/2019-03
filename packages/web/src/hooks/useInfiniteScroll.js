@@ -1,32 +1,38 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { throttle } from 'underscore';
+
+import useUnmounted from './useUnmounted';
 
 const isArriveAtBottom = ({ scrollHeight, offsetHeight, scrollTop }) =>
   offsetHeight + scrollTop >= scrollHeight;
+const isNotArriveAtBottom = scroller => !isArriveAtBottom(scroller);
 
-const useInfiniteScroll = (targetEl, callback) => {
+const useInfiniteScroll = loadData => {
+  const scrollerRef = useRef(null);
+  const { current: scroller } = scrollerRef;
   const [isLoading, setIsLoading] = useState(false);
-  const [isMore, setIsMore] = useState(true);
-
-  const scrollHandler = useCallback(
-    ({ target }) => {
-      if (isMore && !isLoading && isArriveAtBottom(target)) {
-        setIsLoading(true);
-        callback(isMore => {
-          setIsMore(isMore || true);
-          setIsLoading(false);
-        });
-      }
-    },
-    [callback, isLoading, isMore],
-  );
+  const [hasMore, setHasMore] = useState(true);
+  const isNoMoreData = useCallback(() => hasMore === false, [hasMore]);
+  const isUnmounted = useUnmounted();
 
   useEffect(() => {
-    if (!targetEl) return () => {};
-    targetEl.addEventListener('scroll', scrollHandler);
-    return () => targetEl.removeEventListener('scroll', scrollHandler);
-  }, [targetEl, scrollHandler]);
+    const onScrollHandler = throttle(({ target }) => {
+      if (isLoading || isNoMoreData() || isNotArriveAtBottom(target)) return;
+      setIsLoading(true);
+      loadData(hasMore => {
+        if (isUnmounted.current) return;
+        setIsLoading(false);
+        setHasMore(hasMore);
+      });
+    }, 100);
 
-  return { isLoading, isMore };
+    if (scroller) scroller.addEventListener('scroll', onScrollHandler);
+    return () => {
+      if (scroller) scroller.removeEventListener('scroll', onScrollHandler);
+    };
+  }, [scroller, isUnmounted, loadData, isLoading, isNoMoreData]);
+
+  return { isLoading, scrollerRef };
 };
 
 export default useInfiniteScroll;
