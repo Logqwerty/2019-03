@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { throttle } from 'underscore';
 
 import useUnmounted from './useUnmounted';
@@ -10,19 +10,18 @@ const isNotArriveAtBottom = scroller => !isArriveAtBottom(scroller);
 const useInfiniteScroll = loadData => {
   const scrollerRef = useRef(null);
   const { current: scroller } = scrollerRef;
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const isNoMoreData = useCallback(() => hasMore === false, [hasMore]);
+  const [loadInfo, setLoadInfo] = useState({ isLoading: false, hasMore: true });
   const isUnmounted = useUnmounted();
 
   useEffect(() => {
     const onScrollHandler = throttle(({ target }) => {
-      if (isLoading || isNoMoreData() || isNotArriveAtBottom(target)) return;
-      setIsLoading(true);
+      const { isLoading, hasMore } = loadInfo;
+      if (isLoading || !hasMore || isNotArriveAtBottom(target)) return;
+
+      setLoadInfo(prev => ({ ...prev, isLoading: true }));
       loadData(hasMore => {
         if (isUnmounted.current) return;
-        setIsLoading(false);
-        setHasMore(hasMore);
+        setLoadInfo({ isLoading: false, hasMore });
       });
     }, 100);
 
@@ -30,9 +29,9 @@ const useInfiniteScroll = loadData => {
     return () => {
       if (scroller) scroller.removeEventListener('scroll', onScrollHandler);
     };
-  }, [scroller, isUnmounted, loadData, isLoading, isNoMoreData]);
+  }, [scroller, isUnmounted, loadData, loadInfo]);
 
-  return { isLoading, scrollerRef };
+  return { isLoading: loadInfo.isLoading, scrollerRef };
 };
 
 export default useInfiniteScroll;
