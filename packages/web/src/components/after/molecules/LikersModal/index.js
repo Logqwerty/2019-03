@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ErrorBoundary } from 'react-error-boundary';
 
-import { Liker, IconButton, ScrollableContainer } from '@molecules';
+import { Button } from '@atoms';
+import { Liker, IconButton } from '@molecules';
 import { ICON_TYPES } from '@const';
 import { StyledModal, HeaderFlex, Title } from './styles';
-import { useFetchLikers } from './hooks';
-import { useInfiniteScroll } from '../../../../hooks';
+import { withLikersData } from './hoc';
 
 const propTypes = {
   myId: PropTypes.string.isRequired,
@@ -14,10 +15,20 @@ const propTypes = {
   onCloseModal: PropTypes.func.isRequired,
 };
 
-const LikersModal = ({ myId, postId, isOpen, onCloseModal }) => {
-  const { fetchMoreLikers, initLoading, likers } = useFetchLikers(myId, postId);
-  const { isLoading, scrollerRef } = useInfiniteScroll(fetchMoreLikers);
+const Likers = withLikersData(({ myId, likers }) =>
+  likers.map(({ id, username, profileImage, isFollow }) => (
+    <Liker
+      key={`_${username}_`}
+      username={username}
+      profileImage={profileImage}
+      followStatus={isFollow}
+      myId={myId}
+      userId={id}
+    />
+  )),
+);
 
+const LikersModal = ({ myId, postId, isOpen, onCloseModal }) => {
   return (
     <StyledModal isOpen={isOpen} onCloseModal={onCloseModal}>
       <HeaderFlex>
@@ -28,21 +39,17 @@ const LikersModal = ({ myId, postId, isOpen, onCloseModal }) => {
           onClick={onCloseModal}
         />
       </HeaderFlex>
-      <ScrollableContainer
-        isLoading={isLoading || initLoading}
-        ref={scrollerRef}
+      <ErrorBoundary
+        fallbackRender={({ resetErrorBoundary }) => (
+          <div>
+            <h2>서버 오류</h2>
+            <Button onClick={resetErrorBoundary}>재시도</Button>
+          </div>
+        )}
+        onReset={() => <Likers myId={myId} postId={postId} />}
       >
-        {likers.map(({ id, username, profileImage, isFollow }) => (
-          <Liker
-            key={`_${username}_`}
-            username={username}
-            profileImage={profileImage}
-            followStatus={isFollow}
-            myId={myId}
-            userId={id}
-          />
-        ))}
-      </ScrollableContainer>
+        <Likers myId={myId} postId={postId} />
+      </ErrorBoundary>
     </StyledModal>
   );
 };

@@ -3,11 +3,10 @@ import { throttle } from 'underscore';
 
 import useUnmounted from './useUnmounted';
 
-const isArriveAtBottom = ({ scrollHeight, offsetHeight, scrollTop }) =>
-  offsetHeight + scrollTop >= scrollHeight;
-const isNotArriveAtBottom = scroller => !isArriveAtBottom(scroller);
+const isNotArriveAtBottom = ({ scrollHeight, offsetHeight, scrollTop }) =>
+  offsetHeight + scrollTop < scrollHeight;
 
-const useInfiniteScroll = loadData => {
+const useInfiniteScroll = fetchData => {
   const scrollerRef = useRef(null);
   const { current: scroller } = scrollerRef;
   const [loadInfo, setLoadInfo] = useState({ isLoading: false, hasMore: true });
@@ -19,7 +18,7 @@ const useInfiniteScroll = loadData => {
       if (isLoading || !hasMore || isNotArriveAtBottom(target)) return;
 
       setLoadInfo(prev => ({ ...prev, isLoading: true }));
-      loadData(hasMore => {
+      fetchData(hasMore => {
         if (isUnmounted.current) return;
         setLoadInfo({ isLoading: false, hasMore });
       });
@@ -29,7 +28,7 @@ const useInfiniteScroll = loadData => {
     return () => {
       if (scroller) scroller.removeEventListener('scroll', onScrollHandler);
     };
-  }, [scroller, isUnmounted, loadData, loadInfo]);
+  }, [scroller, isUnmounted, fetchData, loadInfo]);
 
   return { isLoading: loadInfo.isLoading, scrollerRef };
 };
