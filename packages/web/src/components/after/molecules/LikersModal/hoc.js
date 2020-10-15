@@ -1,34 +1,32 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import { useErrorHandler } from 'react-error-boundary';
 
-import { useInfiniteScroll } from '../../../../hooks';
+import { ScrollableContainer } from '@molecules';
 import { useFetchLikers } from './hooks';
+import { useInfiniteScroll } from '../../../../hooks';
 
-export const withLikersData = Comp => ({
-  myId,
-  postId,
-  isOpen,
-  onCloseModal,
-}) => {
-  if (!isOpen) return null;
+export const withLikersData = Component => {
+  const WrappedComponent = ({ myId, postId }) => {
+    const handleError = useErrorHandler();
+    const { initLoading, error, likers, fetchMoreLikers } = useFetchLikers(
+      myId,
+      postId,
+    );
+    const { isLoading, scrollerRef } = useInfiniteScroll(fetchMoreLikers);
+    if (error) return handleError(error);
 
-  const likersContainer = useRef(null);
-  const { fetchMoreLikers, initIsLoading, likers } = useFetchLikers(
-    myId,
-    postId,
-  );
-  const { isLoading } = useInfiniteScroll(
-    likersContainer.current,
-    fetchMoreLikers,
-  );
+    return (
+      <ScrollableContainer
+        isLoading={isLoading || initLoading}
+        ref={scrollerRef}
+      >
+        <Component likers={likers} myId={myId} />
+      </ScrollableContainer>
+    );
+  };
 
-  return (
-    <Comp
-      likers={likers}
-      myId={myId}
-      isOpen={isOpen}
-      onCloseModal={onCloseModal}
-      isLoading={isLoading || initIsLoading}
-      ref={likersContainer}
-    />
-  );
+  const name = Component.displayName || Component.name || 'Likers';
+  WrappedComponent.displayName = `withLikersData(${name})`;
+
+  return WrappedComponent;
 };

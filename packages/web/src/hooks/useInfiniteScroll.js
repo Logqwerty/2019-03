@@ -1,32 +1,36 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { throttle } from 'underscore';
 
-const isArriveAtBottom = ({ scrollHeight, offsetHeight, scrollTop }) =>
-  offsetHeight + scrollTop >= scrollHeight;
+import useUnmounted from './useUnmounted';
 
-const useInfiniteScroll = (targetEl, callback) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isMore, setIsMore] = useState(true);
+const isNotArriveAtBottom = ({ scrollHeight, offsetHeight, scrollTop }) =>
+  offsetHeight + scrollTop < scrollHeight;
 
-  const scrollHandler = useCallback(
-    ({ target }) => {
-      if (isMore && !isLoading && isArriveAtBottom(target)) {
-        setIsLoading(true);
-        callback(isMore => {
-          setIsMore(isMore || true);
-          setIsLoading(false);
-        });
-      }
-    },
-    [callback, isLoading, isMore],
-  );
+const useInfiniteScroll = fetchData => {
+  const scrollerRef = useRef(null);
+  const { current: scroller } = scrollerRef;
+  const [loadInfo, setLoadInfo] = useState({ isLoading: false, hasMore: true });
+  const isUnmounted = useUnmounted();
 
   useEffect(() => {
-    if (!targetEl) return () => {};
-    targetEl.addEventListener('scroll', scrollHandler);
-    return () => targetEl.removeEventListener('scroll', scrollHandler);
-  }, [targetEl, scrollHandler]);
+    const onScrollHandler = throttle(({ target }) => {
+      const { isLoading, hasMore } = loadInfo;
+      if (isLoading || !hasMore || isNotArriveAtBottom(target)) return;
 
-  return { isLoading, isMore };
+      setLoadInfo(prev => ({ ...prev, isLoading: true }));
+      fetchData(hasMore => {
+        if (isUnmounted.current) return;
+        setLoadInfo({ isLoading: false, hasMore });
+      });
+    }, 100);
+
+    if (scroller) scroller.addEventListener('scroll', onScrollHandler);
+    return () => {
+      if (scroller) scroller.removeEventListener('scroll', onScrollHandler);
+    };
+  }, [scroller, isUnmounted, fetchData, loadInfo]);
+
+  return { isLoading: loadInfo.isLoading, scrollerRef };
 };
 
 export default useInfiniteScroll;

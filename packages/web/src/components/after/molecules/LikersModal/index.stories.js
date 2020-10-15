@@ -18,12 +18,14 @@ const LikersModalExample = () => {
   return (
     <>
       <Button onClick={onOpenModal}>모달 열기</Button>
-      <LikersModal
-        onCloseModal={onCloseModal}
-        isOpen={isOpen}
-        myId="1"
-        postId="1"
-      />
+      {isOpen && (
+        <LikersModal
+          onCloseModal={onCloseModal}
+          isOpen={isOpen}
+          myId="1"
+          postId="1"
+        />
+      )}
     </>
   );
 };

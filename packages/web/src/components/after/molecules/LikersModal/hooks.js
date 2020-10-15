@@ -1,9 +1,13 @@
-import { useExtendedQuery as useQuery } from '../../../../hooks';
+import { useApolloQuery } from '../../../../hooks';
 import { LIKER_LIST } from '../../../../queries';
 
 const DEFAULT_LIMIT = 10;
 
-const makeVariables = (myId, postId, limit = DEFAULT_LIMIT) => cursor => ({
+const makePartialVariables = (
+  myId,
+  postId,
+  limit = DEFAULT_LIMIT,
+) => cursor => ({
   myId,
   postId,
   cursor,
@@ -11,17 +15,17 @@ const makeVariables = (myId, postId, limit = DEFAULT_LIMIT) => cursor => ({
 });
 
 export const useFetchLikers = (myId, postId) => {
-  const partialVariables = makeVariables(myId, postId);
+  const partialVariables = makePartialVariables(myId, postId);
   const initVariables = partialVariables(null);
-
-  const { data, loading, fetchMore } = useQuery(LIKER_LIST, {
+  const { data, loading, error, fetchMore } = useApolloQuery(LIKER_LIST, {
     variables: initVariables,
     fetchPolicy: 'network-only',
   });
   const likers = (data && data.likerList) || [];
 
   const fetchMoreLikers = done => {
-    const cursor = likers[likers.length - 1].likedAt;
+    const lastLiker = likers[likers.length - 1];
+    const cursor = lastLiker ? lastLiker.likedAt : null;
     const newVariables = partialVariables(cursor);
 
     fetchMore({
@@ -37,7 +41,8 @@ export const useFetchLikers = (myId, postId) => {
 
   return {
     likers,
-    initIsLoading: loading,
+    error,
+    initLoading: loading,
     fetchMoreLikers,
   };
 };
