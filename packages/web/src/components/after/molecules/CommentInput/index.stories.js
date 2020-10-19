@@ -1,5 +1,5 @@
 import React from 'react';
-import { withKnobs, text, boolean } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 import CommentInput from '.';
@@ -10,13 +10,18 @@ export default {
   decorators: [withKnobs],
 };
 
-export const base = () => {
-  const submitDisabled = boolean('submitDisabled', false);
+const myInfo = {
+  id: '1000',
+  username: '__sloth_92',
+};
 
+export const base = () => {
   return (
     <CommentInput
-      submitDisabled={submitDisabled}
-      onChange={action('CommentInput value changed!')}
+      setComments={action('setComments!')}
+      myInfo={myInfo}
+      postId="1"
+      writerId="3"
     />
   );
 };

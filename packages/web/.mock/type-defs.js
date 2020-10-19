@@ -68,6 +68,13 @@ const typeDefs = gql`
     deletePost(postURL: String!): Post
     RequestFollowing(myId: ID!, userId: ID!): UserFollower
     RequestFollowingCancellation(myId: ID!, userId: ID!): UserFollower
+    createComment(
+      PostId: ID!
+      WriterId: ID!
+      UserId: ID!
+      content: String!
+      depth: Int
+    ): Comment
   }
 `;
 

@@ -1,5 +1,5 @@
 import { FOLLOW_STATUS } from '../src/constants';
-import { rawLikers } from '../src/__test__/fixtures';
+import { rawLikers, profileImage } from '../src/__test__/fixtures';
 
 const delay = (sec = 1) => {
   return new Promise(resolve =>
@@ -56,6 +56,22 @@ const likerList = async (_, args) => {
     .slice(0, limit);
 };
 
+const createComment = async (_, args) => {
+  console.info(`[createComment] arg: ${JSON.stringify(args, null, 2)}`);
+  await delay();
+  const { content, PostId } = args;
+  return {
+    id: 100,
+    content,
+    updatedAt: Date.now().toString(),
+    writer: {
+      username: 'tester1',
+      profileImage,
+    },
+    PostId,
+  };
+};
+
 export default {
   String: () => 'Hello, World!',
   Query: () => ({
@@ -67,5 +83,6 @@ export default {
     deletePost,
     RequestFollowing,
     RequestFollowingCancellation,
+    createComment,
   }),
 };
