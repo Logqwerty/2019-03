@@ -49,6 +49,23 @@ export const FOLLOW_STATUS_TEXT = Object.freeze({
   [FOLLOW_STATUS.following]: '팔로잉',
 });
 
+export const TIME_TYPE = Object.freeze({
+  now: 'n',
+  sec: 's',
+  min: 'm',
+  hour: 'h',
+  day: 'd',
+  week: 'w',
+});
+
+export const TIME_UNIT = Object.freeze({
+  sec: 1000,
+  min: 60000,
+  hour: 3600000,
+  day: 86400000,
+  week: 604800000,
+});
+
 export const ICON_IMAGE_LENGTH = 1000;
 export const ICON_LENGTH = 125;
 export const ICON_LOGO_WIDTH = 1000;
