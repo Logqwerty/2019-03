@@ -6,25 +6,27 @@ import { ModalProvider } from '../../../../contexts';
 import { LikerFlex, LikerName } from './styles';
 
 const propTypes = {
-  username: PropTypes.string.isRequired,
-  profileImage: PropTypes.string,
-  followStatus: PropTypes.number,
-  myId: PropTypes.string.isRequired,
-  userId: PropTypes.string.isRequired,
+  liker: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    profileImage: PropTypes.string,
+    isFollow: PropTypes.number.isRequired,
+  }).isRequired,
+  postId: PropTypes.string.isRequired,
+  updateFollowing: PropTypes.func.isRequired,
 };
 
-const Liker = ({ username, profileImage, followStatus, myId, userId }) => {
+const Liker = ({ liker, postId, updateFollowing }) => {
+  const { id, username, profileImage } = liker;
   return (
-    <LikerFlex verticalAlign="center">
+    <LikerFlex>
       <Profile to={`/${username}`} ratio={12} imgUrl={profileImage} />
       <LikerName to={`/${username}`}>{username}</LikerName>
       <ModalProvider>
         <FollowButton
-          followStatus={followStatus}
-          profileImage={profileImage}
-          username={username}
-          myId={myId}
-          userId={userId}
+          userId={id}
+          postId={postId}
+          updateFollowing={updateFollowing}
         />
       </ModalProvider>
     </LikerFlex>
@@ -33,4 +35,4 @@ const Liker = ({ username, profileImage, followStatus, myId, userId }) => {
 
 Liker.propTypes = propTypes;
 
-export default Liker;
+export default React.memo(Liker);

@@ -1,10 +1,10 @@
-import { profileImage } from './images';
+import { BASE_URL_PROFILES } from './constants';
 
 const myInfo = {
-  id: '1000',
-  username: '__sloth_92',
-  name: 'tester1',
-  profileImage,
+  id: '100',
+  username: '__tester_0',
+  name: '__tester_0',
+  profileImage: `${BASE_URL_PROFILES}/profile_0010.jpg`,
 };
 
 export default myInfo;

@@ -21,4 +21,4 @@ const Input = props => <StyledInput {...props} />;
 Input.propTypes = propTypes;
 Input.defaultProps = defaultProps;
 
-export default Input;
+export default React.memo(Input);

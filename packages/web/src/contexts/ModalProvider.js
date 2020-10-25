@@ -2,22 +2,34 @@ import React, { createContext, useState, useContext } from 'react';
 
 const ModalContext = createContext();
 
-export const ModalProvider = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const enableBodyScroll = () => {
+  document.body.style.overflow = 'hidden auto';
+};
 
-  const onOpenModal = () => setIsOpen(true);
-  const onCloseModal = () => setIsOpen(false);
+const disableBodyScroll = () => {
+  document.body.style.overflow = 'hidden';
+};
+
+export const ModalProvider = ({ children }) => {
+  const [value, setValue] = useState({
+    isOpen: false,
+    windowOffet: 0,
+    onCloseModal: () => {
+      enableBodyScroll();
+      setValue(prev => ({ ...prev, isOpen: false }));
+    },
+    onOpenModal: () => {
+      disableBodyScroll();
+      setValue(prev => ({
+        ...prev,
+        isOpen: true,
+        windowOffet: window.scrollY,
+      }));
+    },
+  });
 
   return (
-    <ModalContext.Provider
-      value={{
-        isOpen,
-        onOpenModal,
-        onCloseModal,
-      }}
-    >
-      {children}
-    </ModalContext.Provider>
+    <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
   );
 };
 

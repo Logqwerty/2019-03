@@ -24,4 +24,4 @@ const Link = ({ to, href, ...props }) => {
 
 Link.propTypes = propTypes;
 
-export default Link;
+export default React.memo(Link);

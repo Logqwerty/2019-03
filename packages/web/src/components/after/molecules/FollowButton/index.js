@@ -3,54 +3,50 @@ import PropTypes from 'prop-types';
 
 import { FolloCancelModal } from '@molecules';
 
+import { useMyInfoCookie } from '@hooks';
 import { useFollowButton } from './hooks';
-import { StyledFollowButton, InnerSpinner } from './styles';
+import { StyledButton, InnerSpinner } from './styles';
 
 const propTypes = {
-  followStatus: PropTypes.number,
-  myId: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  profileImage: PropTypes.string,
+  postId: PropTypes.string.isRequired,
+  updateFollowing: PropTypes.func.isRequired,
 };
 
-const FollowButton = ({
-  followStatus,
-  myId,
-  userId,
-  username,
-  profileImage,
-}) => {
+const FollowButton = ({ userId, postId, updateFollowing }) => {
+  const { id: myId } = useMyInfoCookie();
   const {
     isLoading,
-    isModalOpen,
     isFollowing,
+    isOpen,
     displayedText,
     onCloseModal,
     onRequestFollowing,
     onCancelFollowing,
   } = useFollowButton({
-    followStatus,
     myId,
     userId,
+    postId,
+    updateFollowing,
   });
 
   return (
     <>
-      <StyledFollowButton
+      <StyledButton
         onClick={onRequestFollowing}
         isFollowing={isFollowing}
         isLoading={isLoading}
       >
         {displayedText}
         {isLoading && <InnerSpinner reverse={!isFollowing} />}
-      </StyledFollowButton>
+      </StyledButton>
       <FolloCancelModal
-        isOpen={isModalOpen}
+        isOpen={isOpen}
         onCloseModal={onCloseModal}
         onCancelFollowing={onCancelFollowing}
-        username={username}
-        profileImage={profileImage}
+        userId={userId}
+        postId={postId}
+        isLoading={isLoading}
       />
     </>
   );
@@ -58,4 +54,4 @@ const FollowButton = ({
 
 FollowButton.propTypes = propTypes;
 
-export default FollowButton;
+export default React.memo(FollowButton);

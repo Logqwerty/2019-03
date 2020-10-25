@@ -11,6 +11,7 @@ import AuthRoute from './AuthRoute';
 import AccountRoute from './AccountRoute';
 import MyAppPage from '../MyAppPage';
 import { IS_LOGGED_IN } from '../../../queries';
+import { MainPage } from '../../../pages';
 
 const HomePage = lazy(() => import('../HomePage'));
 const NewPostPage = lazy(() => import('../NewPostPage'));
@@ -75,7 +76,7 @@ function App({ cookies }) {
           <Navigation />
           <Suspense fallback={<Loading size={50} />}>
             <Switch>
-              <Route path="/" exact component={HomePage} />
+              <Route path="/" exact component={MainPage} />
               <Route path="/new/post" exact component={NewPostPage} />
               <Route
                 path="/edit/:postURL"

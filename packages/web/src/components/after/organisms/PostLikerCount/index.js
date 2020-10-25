@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { LikersModal } from '@molecules';
+import { LikersModal } from '@organisms';
 import { useModalContext } from '@contexts';
 import { StyledButton } from './styles';
 
 const propTypes = {
   likerCount: PropTypes.number.isRequired,
+  myId: PropTypes.string.isRequired,
   postId: PropTypes.string.isRequired,
 };
 
@@ -28,4 +29,4 @@ const PostLikerCount = ({ myId, postId, likerCount }) => {
 
 PostLikerCount.propTypes = propTypes;
 
-export default PostLikerCount;
+export default React.memo(PostLikerCount);

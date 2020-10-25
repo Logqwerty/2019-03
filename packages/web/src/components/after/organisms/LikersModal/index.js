@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useDispatch } from 'react-redux';
 
-import { Button } from '@atoms';
-import { Liker, IconButton } from '@molecules';
+import { IconButton, ServerError } from '@molecules';
 import { ICON_TYPES } from '@const';
+
 import { StyledModal, HeaderFlex, Title } from './styles';
-import { withLikersData } from './hoc';
+import { recoverLikersError, resetLikers } from './actions';
+import Likers from './Likers';
 
 const propTypes = {
   myId: PropTypes.string.isRequired,
@@ -15,22 +17,17 @@ const propTypes = {
   onCloseModal: PropTypes.func.isRequired,
 };
 
-const Likers = withLikersData(({ myId, likers }) =>
-  likers.map(({ id, username, profileImage, isFollow }) => (
-    <Liker
-      key={`_${username}_`}
-      username={username}
-      profileImage={profileImage}
-      followStatus={isFollow}
-      myId={myId}
-      userId={id}
-    />
-  )),
-);
-
 const LikersModal = ({ myId, postId, isOpen, onCloseModal }) => {
+  const dispatch = useDispatch();
+  const onReset = useCallback(() => dispatch(recoverLikersError()), [dispatch]);
+
+  const onCloseModalWithClear = () => {
+    dispatch(resetLikers(postId));
+    onCloseModal();
+  };
+
   return (
-    <StyledModal isOpen={isOpen} onCloseModal={onCloseModal}>
+    <StyledModal isOpen={isOpen} onCloseModal={onCloseModalWithClear}>
       <HeaderFlex>
         <Title>좋아요</Title>
         <IconButton
@@ -39,15 +36,7 @@ const LikersModal = ({ myId, postId, isOpen, onCloseModal }) => {
           onClick={onCloseModal}
         />
       </HeaderFlex>
-      <ErrorBoundary
-        fallbackRender={({ resetErrorBoundary }) => (
-          <div>
-            <h2>서버 오류</h2>
-            <Button onClick={resetErrorBoundary}>재시도</Button>
-          </div>
-        )}
-        onReset={() => <Likers myId={myId} postId={postId} />}
-      >
+      <ErrorBoundary FallbackComponent={ServerError} onReset={onReset}>
         <Likers myId={myId} postId={postId} />
       </ErrorBoundary>
     </StyledModal>

@@ -1,35 +1,43 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Profile, PostModal } from '@molecules';
+import { Profile } from '@molecules';
+import { PostModal } from '@organisms';
 import { useModalContext } from '@contexts';
-import { StyledFlex, Username, EllipsisIcon } from './styles';
+import { useMyInfoCookie } from '@hooks';
+import { PostHeadFlex, Username, EllipsisIcon } from './styles';
+import * as selector from './selectors';
 
 const propTypes = {
-  writerName: PropTypes.string.isRequired,
-  profileImage: PropTypes.string,
-  postURL: PropTypes.string.isRequired,
-  isMine: PropTypes.bool.isRequired,
+  postId: PropTypes.string.isRequired,
+  deletePost: PropTypes.func.isRequired,
 };
 
-const PostHead = ({ writerName, profileImage, postURL, isMine }) => {
+const PostHead = ({ postId, deletePost }) => {
+  const { id: myId } = useMyInfoCookie();
   const { isOpen, onOpenModal, onCloseModal } = useModalContext();
+  const { id: writerId, username, profileImage } = useSelector(
+    selector.writer(postId),
+  );
+  const isMine = myId === writerId;
 
   return (
-    <StyledFlex verticalAlign="center">
-      <Profile to={`/${writerName}`} imgUrl={profileImage} ratio={10} />
-      <Username to={`/${writerName}`}>{writerName}</Username>
+    <PostHeadFlex>
+      <Profile to={`/${username}`} imgUrl={profileImage} ratio={10} />
+      <Username to={`/${username}`}>{username}</Username>
       <EllipsisIcon onClick={onOpenModal} />
       <PostModal
         isOpen={isOpen}
         onCloseModal={onCloseModal}
-        postURL={postURL}
+        postId={postId}
+        deletePost={deletePost}
         isMine={isMine}
       />
-    </StyledFlex>
+    </PostHeadFlex>
   );
 };
 
 PostHead.propTypes = propTypes;
 
-export default PostHead;
+export default React.memo(PostHead);

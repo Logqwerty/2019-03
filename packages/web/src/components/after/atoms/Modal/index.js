@@ -23,4 +23,4 @@ const Modal = ({ isOpen, onCloseModal, className, children }) => {
 
 Modal.propTypes = propTypes;
 
-export default Modal;
+export default React.memo(Modal);

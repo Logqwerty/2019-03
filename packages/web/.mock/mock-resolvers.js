@@ -61,7 +61,7 @@ const createComment = async (_, args) => {
   await delay();
   const { content, PostId } = args;
   return {
-    id: 100,
+    id: Date.now().toString(),
     content,
     updatedAt: Date.now().toString(),
     writer: {
@@ -74,8 +74,11 @@ const createComment = async (_, args) => {
 
 const followingPostList = async (_, args) => {
   console.info(`[followingPostList] arg: ${JSON.stringify(args, null, 2)}`);
+  const { cursor, limit } = args;
   await delay();
-  return posts;
+  return posts
+    .filter(({ updatedAt }) => (cursor || Date.now()) > +updatedAt)
+    .slice(0, limit);
 };
 
 export default {

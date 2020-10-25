@@ -26,4 +26,4 @@ const Spinner = ({ size, width, foreColor, backColor, reverse, className }) => {
 
 Spinner.propTypes = propTypes;
 
-export default Spinner;
+export default React.memo(Spinner);

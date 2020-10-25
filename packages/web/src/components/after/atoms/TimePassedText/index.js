@@ -47,4 +47,4 @@ const TimePassedText = ({ updatedAt, className }) => {
 
 TimePassedText.propTypes = propTypes;
 
-export default TimePassedText;
+export default React.memo(TimePassedText);

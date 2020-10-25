@@ -7,7 +7,7 @@ const posts = Array.from(Array(13), (_, idx) => ({
   postURL: `posturl_${idx}`,
   content: `this is a test post ${idx}.`,
   isLike: idx % 2 === 0,
-  updatedAt: `${1597742670000 + 1000 * idx}`,
+  updatedAt: `${1597742670000 - 1000 * idx}`,
   writer: {
     id: `${100 + idx}`,
     username: `__tester_${idx}`,
@@ -25,6 +25,11 @@ const posts = Array.from(Array(13), (_, idx) => ({
       content:
         '#long Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum at eligendi beatae est repellat repellendus modi nihil adipisci maiores, autem, odit rem cupiditate ipsam suscipit numquam officiis minima! Provident, itaque?',
       writer: { username: 'commeter2' },
+    },
+    {
+      id: `${30000 + idx}`,
+      content: 'lololololololololololololol',
+      writer: { username: 'commeter3' },
     },
   ],
   likerInfo: {

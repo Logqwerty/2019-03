@@ -11,6 +11,7 @@ export const StyledDiv = styled.div`
 export const SpinnerWapper = styled.div`
   position: relative;
   width: 100%;
+  min-width: 50px;
   height: 50px;
 `;
 

@@ -1,23 +1,32 @@
 import React from 'react';
-import { withKnobs, text } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 
 import { Button } from '@atoms';
 import { ModalProvider, useModalContext } from '@contexts';
-import { profileImage as profileImageFixture } from '@fixtures';
+import { rawLikers } from '@fixtures';
+import rootReducer from '@reducer';
+import { withRedux } from '../../../../common';
 import FollowCancelModal from '.';
+
+const postId = '1000';
+const likers = {
+  [postId]: rawLikers,
+};
 
 export default {
   title: 'components/molecules/FollowCancelModal',
   component: FollowCancelModal,
-  decorators: [withKnobs],
+  decorators: [
+    withKnobs,
+    withRedux(rootReducer)({
+      likers,
+    }),
+  ],
 };
 
 const FollowCancleModalExample = () => {
   const { isOpen, onCloseModal, onOpenModal } = useModalContext();
-
   const onCancelFollowing = onCloseModal;
-  const username = text('username', 'tester');
-  const profileImage = text('profileImage', profileImageFixture);
 
   return (
     <>
@@ -26,8 +35,8 @@ const FollowCancleModalExample = () => {
         isOpen={isOpen}
         onCloseModal={onCloseModal}
         onCancelFollowing={onCancelFollowing}
-        username={username}
-        profileImage={profileImage}
+        postId={postId}
+        userId={rawLikers[0].id}
       />
     </>
   );

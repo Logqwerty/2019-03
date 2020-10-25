@@ -31,4 +31,4 @@ const IconButton = ({ iconType, ratio, onClick, ...props }) => {
 IconButton.propTypes = propTypes;
 IconButton.defaultProps = defaultProps;
 
-export default IconButton;
+export default React.memo(IconButton);

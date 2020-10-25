@@ -14,4 +14,4 @@ const Image = ({ src, alt, round, ...props }) => {
 
 Image.propTypes = propTypes;
 
-export default Image;
+export default React.memo(Image);

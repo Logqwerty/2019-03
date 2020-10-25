@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { palette } from 'styled-tools';
 
-import { Flex, Modal, ModalMenu } from '@atoms';
+import { Flex, Modal, ModalMenu, Spinner } from '@atoms';
 import { Profile } from '@molecules';
 import { FLEX_ALIGN, FLEX_DIRECTION } from '@const';
 
@@ -32,4 +32,13 @@ export const FollowCancelMenu = styled(ModalMenu).attrs(() => ({
   danger: true,
 }))`
   font-weight: bold;
+`;
+
+export const InnerSpinner = styled(Spinner).attrs(() => ({
+  width: '5px',
+}))`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 `;

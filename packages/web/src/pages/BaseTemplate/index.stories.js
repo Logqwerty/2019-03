@@ -2,22 +2,14 @@ import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 import StoryRouter from 'storybook-react-router';
 
+import { myInfo } from '@fixtures';
 import BaseTemplate from '.';
+import { setCookie } from '../../utils';
 
 export default {
   title: 'components/templates/BaseTemplate',
   component: BaseTemplate,
   decorators: [withKnobs, StoryRouter()],
-};
-
-const myInfo = {
-  id: '1000',
-  username: '__sloth_92',
-};
-
-const setCookie = (name, value) => {
-  const cookie = `${name}=${encodeURIComponent(value)}`;
-  document.cookie = cookie;
 };
 
 export const base = () => {

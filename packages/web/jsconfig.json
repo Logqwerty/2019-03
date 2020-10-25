@@ -3,13 +3,17 @@
     "baseUrl": ".",
     "paths": {
       "@": ["src/"],
+      "@reducer": ["src/rootReducer.js"],
       "@const": ["src/constants.js"],
       "@atoms": ["src/components/after/atoms"],
       "@molecules": ["src/components/after/molecules"],
       "@organisms": ["src/components/after/organisms"],
-      "@helpers": ["src/helpers"],
+      "@pages": ["src/pages"],
+      "@helpers": ["src/common/helpers"],
       "@contexts": ["src/contexts"],
-      "@fixtures": ["src/__test__/fixtures"]
+      "@fixtures": ["src/__test__/fixtures"],
+      "@hooks": ["src/hooks"],
+      "@queries": ["src/queries"]
     }
   }
 }

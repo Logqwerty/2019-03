@@ -6,6 +6,7 @@ import { ShowMoreComments } from './styles';
 
 const propTypes = {
   postURL: PropTypes.string.isRequired,
+  commentCount: PropTypes.number.isRequired,
   comments: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -17,17 +18,19 @@ const propTypes = {
   ).isRequired,
 };
 
-const PostComments = ({ postURL, comments }) => {
+const PostComments = ({ postURL, commentCount, comments }) => {
+  const totalCount =
+    commentCount >= comments.length ? commentCount : comments.length;
   return (
     <>
-      {comments.length >= 3 && (
+      {totalCount >= 3 && (
         <ShowMoreComments to={`/p/${postURL}`}>
           댓글 {comments.length}개 모두 보기
         </ShowMoreComments>
       )}
-      {comments.map(({ writer: commenter, content: commentContents }) => (
+      {comments.map(({ id, writer: commenter, content: commentContents }) => (
         <Comment
-          key={`__${commenter.username}__`}
+          key={`__${id}__`}
           writer={commenter}
           contents={commentContents}
         />
@@ -38,4 +41,4 @@ const PostComments = ({ postURL, comments }) => {
 
 PostComments.propTypes = propTypes;
 
-export default PostComments;
+export default React.memo(PostComments);

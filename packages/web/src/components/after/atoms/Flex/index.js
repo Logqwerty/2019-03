@@ -23,4 +23,4 @@ const Flex = React.forwardRef((props, ref) => {
 Flex.propTypes = propTypes;
 Flex.defaultProps = defaultProps;
 
-export default Flex;
+export default React.memo(Flex);

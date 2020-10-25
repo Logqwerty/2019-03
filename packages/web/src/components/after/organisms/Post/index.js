@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Comment as MainComment } from '@molecules';
 import { PostHead, PostLikerCount, PostComments } from '@organisms';
 import { ModalProvider } from '@contexts';
-import { useToggleHeart } from './hooks';
+import { useMyInfoCookie } from '@hooks';
+import { usePostLike, useComments } from './hooks';
 import {
   PostFlex,
   PostIconGroupFlex,
@@ -17,6 +18,9 @@ import {
 } from './styles';
 
 const propTypes = {
+  toggleHeart: PropTypes.func.isRequired,
+  addComment: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
   post: PropTypes.shape({
     id: PropTypes.string,
     imageURL: PropTypes.string,
@@ -44,38 +48,29 @@ const propTypes = {
         }),
       }),
     ),
-  }),
-  myInfo: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    profileImage: PropTypes.string,
-  }),
+  }).isRequired,
 };
 
-const Post = ({ post, myInfo }) => {
-  const [comments, setComments] = useState(post.commentList);
-  const { heartType, likerCount, onClickHeartIcon } = useToggleHeart(
-    post,
-    myInfo,
-  );
+const Post = ({ post, toggleHeart, addComment, deletePost }) => {
   const { id: postId, writer, imageURL, content, postURL, updatedAt } = post;
-  const { id: writerId, username: writerName, profileImage } = writer;
-  const { id: myId, username: myName } = myInfo;
+  const { id: writerId } = writer;
+  const { id: myId, username: myName } = useMyInfoCookie();
+  const { comments, commentCount } = useComments(postId);
+  const { heartType, likerCount, onClickHeart } = usePostLike({
+    myId,
+    postId,
+    writerId,
+    toggleHeart,
+  });
 
   return (
     <PostFlex>
       <ModalProvider>
-        <PostHead
-          writerName={writerName}
-          profileImage={profileImage}
-          postURL={postURL}
-          isMine={myName === writerName}
-        />
+        <PostHead postId={postId} deletePost={deletePost} />
       </ModalProvider>
       <PostImage src={imageURL} />
       <PostIconGroupFlex>
-        <HeartIcon iconType={heartType} onClick={onClickHeartIcon} />
+        <HeartIcon iconType={heartType} onClick={onClickHeart} />
         <CommentIcon to={`/p/${postURL}`} />
       </PostIconGroupFlex>
       <PostBottomFlex>
@@ -83,14 +78,19 @@ const Post = ({ post, myInfo }) => {
           <PostLikerCount likerCount={likerCount} myId={myId} postId={postId} />
         </ModalProvider>
         <MainComment writer={writer} contents={content} />
-        <PostComments postURL={postURL} comments={comments} />
+        <PostComments
+          postURL={postURL}
+          commentCount={commentCount}
+          comments={comments}
+        />
       </PostBottomFlex>
       <TimePassedText updatedAt={updatedAt} />
       <CommentInput
+        addComment={addComment}
+        myId={myId}
+        myName={myName}
         writerId={writerId}
         postId={postId}
-        myInfo={myInfo}
-        setComments={setComments}
       />
     </PostFlex>
   );
@@ -98,4 +98,4 @@ const Post = ({ post, myInfo }) => {
 
 Post.propTypes = propTypes;
 
-export default Post;
+export default React.memo(Post);

@@ -18,6 +18,7 @@ export const PostFlex = styled(Flex).attrs(() => ({
 }))`
   width: ${POST_WIDTH}px;
   border: 1px solid ${palette('border')};
+  margin-bottom: 48px;
 `;
 
 export const Username = styled(Link)`
@@ -34,11 +35,6 @@ export const Username = styled(Link)`
 export const PostImage = styled(Image)`
   height: ${POST_IMAGE_HEIGHT}px;
 `;
-
-export const EllipsisIcon = styled(IconButton).attrs(() => ({
-  iconType: ICON_TYPES.ellipsis,
-  ratio: 1.75,
-}))``;
 
 export const PostIconGroupFlex = styled(Flex)`
   width: 100%;

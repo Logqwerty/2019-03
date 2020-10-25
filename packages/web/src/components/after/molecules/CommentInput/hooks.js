@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 
-import { CREATE_COMMENT } from '../../../../queries';
+import { CREATE_COMMENT } from '@queries';
 
 const EMPTY_STRING = '';
 
@@ -12,10 +12,16 @@ const makePartialVariables = (writerId, postId, myId) => content => ({
   UserId: myId,
 });
 
-export const useAddComment = ({ writerId, postId, myInfo, setComments }) => {
-  const partialVariables = makePartialVariables(writerId, postId, myInfo.id);
+export const useAddComment = ({
+  writerId,
+  postId,
+  myId,
+  myName,
+  addComment,
+}) => {
+  const partialVariables = makePartialVariables(writerId, postId, myId);
   const [commentValue, setCommentValue] = useState(EMPTY_STRING);
-  const [addComment, { loading }] = useMutation(CREATE_COMMENT);
+  const [createComment, { loading }] = useMutation(CREATE_COMMENT);
 
   const onFocus = ({ target }) => {
     if (loading) target.blur();
@@ -27,26 +33,22 @@ export const useAddComment = ({ writerId, postId, myInfo, setComments }) => {
   const onSubmitComment = async e => {
     e.preventDefault();
     if (loading) return;
-    const { data } = await addComment({
-      variables: partialVariables(commentValue),
-    });
-
-    setComments(prev => [
-      ...prev,
-      {
-        id: data.createComment.id,
-        content: commentValue,
-        writer: {
-          username: myInfo.username,
-        },
+    const variables = partialVariables(commentValue);
+    const { data } = await createComment({ variables });
+    const newComment = {
+      id: data.createComment.id,
+      content: commentValue,
+      writer: {
+        username: myName,
       },
-    ]);
+    };
+    addComment(postId, newComment);
     setCommentValue(EMPTY_STRING);
   };
 
   return {
     disabled: commentValue === EMPTY_STRING,
-    isLoading: loading,
+    loading,
     commentValue,
     onChange,
     onSubmitComment,

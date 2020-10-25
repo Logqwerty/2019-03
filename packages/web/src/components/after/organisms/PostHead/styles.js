@@ -1,11 +1,18 @@
 import styled from 'styled-components';
 import { palette } from 'styled-tools';
 
-import { POST_SPACE_VERTICAL, POST_SPACE_HORIZONTAL, ICON_TYPES } from '@const';
+import {
+  POST_SPACE_VERTICAL,
+  POST_SPACE_HORIZONTAL,
+  ICON_TYPES,
+  FLEX_ALIGN,
+} from '@const';
 import { Flex, Link } from '@atoms';
 import { IconButton } from '@molecules';
 
-export const StyledFlex = styled(Flex)`
+export const PostHeadFlex = styled(Flex).attrs(() => ({
+  verticalAlign: FLEX_ALIGN.center,
+}))`
   width: 100%;
   padding: ${POST_SPACE_VERTICAL}px ${POST_SPACE_HORIZONTAL}px;
   box-sizing: border-box;

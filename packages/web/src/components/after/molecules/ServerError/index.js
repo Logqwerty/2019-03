@@ -5,26 +5,19 @@ import { Button } from '@atoms';
 import { ErrorFlex, FaviconIcon, ErrorMessage } from './styles';
 
 const propTypes = {
-  message: PropTypes.string.isRequired,
-  buttonText: PropTypes.string,
-  onRecover: PropTypes.func,
+  resetErrorBoundary: PropTypes.func,
 };
 
-const defaultProps = {
-  buttonText: '재시도',
-};
-
-const ServerError = ({ message, buttonText, onRecover }) => {
+const ServerError = ({ className, resetErrorBoundary }) => {
   return (
-    <ErrorFlex>
+    <ErrorFlex className={className}>
       <FaviconIcon />
-      <ErrorMessage>{message}</ErrorMessage>
-      <Button onClick={onRecover}>{buttonText}</Button>
+      <ErrorMessage>서버 오류!</ErrorMessage>
+      <Button onClick={resetErrorBoundary}>재시도</Button>
     </ErrorFlex>
   );
 };
 
 ServerError.propTypes = propTypes;
-ServerError.defaultProps = defaultProps;
 
 export default ServerError;

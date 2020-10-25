@@ -11,36 +11,40 @@ import {
 } from './styles';
 
 const propTypes = {
+  myId: PropTypes.string.isRequired,
+  myName: PropTypes.string.isRequired,
   writerId: PropTypes.string.isRequired,
   postId: PropTypes.string.isRequired,
-  myInfo: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    profileImage: PropTypes.string,
-  }).isRequired,
-  setComments: PropTypes.func.isRequired,
+  addComment: PropTypes.func,
 };
 
-const CommentInput = ({ postId, writerId, myInfo, setComments, className }) => {
+const CommentInput = ({
+  myId,
+  myName,
+  postId,
+  writerId,
+  addComment,
+  className,
+}) => {
   const {
     disabled,
     commentValue,
-    isLoading,
+    loading,
     onFocus,
     onChange,
     onSubmitComment,
   } = useAddComment({
     writerId,
     postId,
-    myInfo,
-    setComments,
+    myName,
+    myId,
+    addComment,
   });
 
   return (
     <CommentInputFlex className={className}>
       <SpinnerWrapper>
-        {isLoading && <InnerSpinner />}
+        {loading && <InnerSpinner />}
         <StyledInput
           value={commentValue}
           placeholder="댓글 달기..."
@@ -57,4 +61,4 @@ const CommentInput = ({ postId, writerId, myInfo, setComments, className }) => {
 
 CommentInput.propTypes = propTypes;
 
-export default CommentInput;
+export default React.memo(CommentInput);
