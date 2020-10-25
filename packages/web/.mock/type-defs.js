@@ -60,6 +60,7 @@ const typeDefs = gql`
 
   type Query {
     likerList(myId: ID!, postId: ID!, cursor: String, limit: Int): [Liker]
+    followingPostList(id: ID, cursor: String, limit: Int): [Post]
   }
 
   type Mutation {

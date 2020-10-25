@@ -1,5 +1,5 @@
 import { FOLLOW_STATUS } from '../src/constants';
-import { rawLikers, profileImage } from '../src/__test__/fixtures';
+import { rawLikers, profileImage, posts } from '../src/__test__/fixtures';
 
 const delay = (sec = 1) => {
   return new Promise(resolve =>
@@ -72,10 +72,17 @@ const createComment = async (_, args) => {
   };
 };
 
+const followingPostList = async (_, args) => {
+  console.info(`[followingPostList] arg: ${JSON.stringify(args, null, 2)}`);
+  await delay();
+  return posts;
+};
+
 export default {
   String: () => 'Hello, World!',
   Query: () => ({
     likerList,
+    followingPostList,
   }),
   Mutation: () => ({
     createPostLike,

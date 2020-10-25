@@ -1,8 +1,4 @@
-const BASE_URL_PROFILES =
-  'https://youngstar-storage.s3.ap-northeast-2.amazonaws.com/profiles';
-
-const BASE_URL_POSTS =
-  'https://youngstar-storage.s3.ap-northeast-2.amazonaws.com/post';
+import { BASE_URL_PROFILES, BASE_URL_POSTS } from './constants';
 
 export const profileImages = [
   `${BASE_URL_PROFILES}/profile_0000.jpg`,
