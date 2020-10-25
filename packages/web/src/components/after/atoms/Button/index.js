@@ -42,16 +42,18 @@ const Button = ({
   ...props
 }) => {
   if (to) {
-    return <StyledLink to={to} transparent onlyContent {...props} />;
+    return <StyledLink to={to} transparent={1} nopadding={1} {...props} />;
   }
   if (href) {
-    return <StyledAnchor href={href} transparent onlyContent {...props} />;
+    return (
+      <StyledAnchor href={href} transparent={1} nopadding={1} {...props} />
+    );
   }
   return (
     <StyledButton
       type={type}
       transparent={transparent}
-      onlyContent={onlyContent}
+      nopadding={onlyContent}
       onClick={onClick}
       {...props}
     />
