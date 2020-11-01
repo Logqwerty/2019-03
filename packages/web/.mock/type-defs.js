@@ -60,6 +60,7 @@ const typeDefs = gql`
 
   type Query {
     likerList(myId: ID!, postId: ID!, cursor: String, limit: Int): [Liker]
+    followingPostList(id: ID, cursor: String, limit: Int): [Post]
   }
 
   type Mutation {
@@ -68,6 +69,13 @@ const typeDefs = gql`
     deletePost(postURL: String!): Post
     RequestFollowing(myId: ID!, userId: ID!): UserFollower
     RequestFollowingCancellation(myId: ID!, userId: ID!): UserFollower
+    createComment(
+      PostId: ID!
+      WriterId: ID!
+      UserId: ID!
+      content: String!
+      depth: Int
+    ): Comment
   }
 `;
 

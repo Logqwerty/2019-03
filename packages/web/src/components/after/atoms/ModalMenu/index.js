@@ -50,4 +50,4 @@ const ModalMenu = ({ position, to, textToCopy, onClick, ...props }) => {
 ModalMenu.propTypes = propTypes;
 ModalMenu.defaultProps = defaultProps;
 
-export default ModalMenu;
+export default React.memo(ModalMenu);

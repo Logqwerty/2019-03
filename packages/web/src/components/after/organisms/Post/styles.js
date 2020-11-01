@@ -1,23 +1,25 @@
 import styled from 'styled-components';
 import { palette } from 'styled-tools';
 
-import { ICON_TYPES, POST_WIDTH, POST_IMAGE_HEIGHT } from '@const';
-import { Flex, Link, Image, Button } from '@atoms';
+import {
+  ICON_TYPES,
+  POST_WIDTH,
+  POST_IMAGE_HEIGHT,
+  FLEX_DIRECTION,
+} from '@const';
+import { Flex, Link, Image, TimePassedText } from '@atoms';
 import { IconButton, CommentInput } from '@molecules';
 
 const SPACE_VERTICAL = 16;
 const SPACE_HORIZONTAL = 16;
 
-export const PostFlex = styled(Flex)`
+export const PostFlex = styled(Flex).attrs(() => ({
+  direction: FLEX_DIRECTION.col,
+}))`
   width: ${POST_WIDTH}px;
+  background-color: ${palette('white')}
   border: 1px solid ${palette('border')};
-`;
-
-export const PostTopFlex = styled(Flex)`
-  width: 100%;
-  padding: ${SPACE_VERTICAL}px ${SPACE_HORIZONTAL}px;
-  box-sizing: border-box;
-  border-bottom: 1px solid ${palette('border')};
+  margin-bottom: 48px;
 `;
 
 export const Username = styled(Link)`
@@ -34,11 +36,6 @@ export const Username = styled(Link)`
 export const PostImage = styled(Image)`
   height: ${POST_IMAGE_HEIGHT}px;
 `;
-
-export const EllipsisIcon = styled(IconButton).attrs(() => ({
-  iconType: ICON_TYPES.ellipsis,
-  ratio: 1.75,
-}))``;
 
 export const PostIconGroupFlex = styled(Flex)`
   width: 100%;
@@ -59,35 +56,12 @@ export const CommentIcon = styled(IconButton).attrs(() => ({
   ratio: 2.25,
 }))``;
 
-export const LikeInformation = styled(Button).attrs(() => ({
-  transparent: true,
-  onlyContent: true,
+export const PostBottomFlex = styled(Flex).attrs(() => ({
+  direction: FLEX_DIRECTION.col,
 }))`
-  color: ${palette('black')};
-  font-weight: 600;
-  font-size: 1rem;
-
-  margin-bottom: 8px;
-`;
-
-export const PostBottomFlex = styled(Flex)`
   width: 100%;
   box-sizing: border-box;
-
-  padding-left: ${SPACE_HORIZONTAL}px;
-  padding-right: ${SPACE_HORIZONTAL}px;
-  padding-bottom: 16px;
-`;
-
-export const ShowMoreComments = styled(Link)`
-  color: ${palette('grayscale', 5)};
-  font-size: 0.9rem;
-
-  margin-bottom: 8px;
-
-  &:hover {
-    text-decoration: none;
-  }
+  padding: 0px ${SPACE_HORIZONTAL}px 8px;
 `;
 
 export const StyledCommentInput = styled(CommentInput)`
@@ -98,4 +72,8 @@ export const StyledCommentInput = styled(CommentInput)`
   border-left: none;
   border-right: none;
   border-bottom: none;
+`;
+
+export const StyledTimePassedText = styled(TimePassedText)`
+  padding: 0px ${SPACE_HORIZONTAL}px 8px;
 `;

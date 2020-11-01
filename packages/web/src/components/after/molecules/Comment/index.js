@@ -34,4 +34,4 @@ const Comment = ({ writer, contents, className }) => {
 Comment.propTypes = propTypes;
 Comment.defaultProps = defaultProps;
 
-export default Comment;
+export default React.memo(Comment);

@@ -29,20 +29,20 @@ const styles = css`
 
   box-sizing: border-box;
   border-radius: 3px;
-  border-width: ${ifProp('onlyContent', '0px', '1px')};
+  border-width: ${ifProp('nopadding', '0px', '1px')};
   border-style: solid;
   padding: ${ifProp(
-    'onlyContent',
+    'nopadding',
     '0px',
     withButtonProps((_, __, unit = DEFAULT_UNIT) => `${unit * 2}px`),
   )};
   padding-left: ${ifProp(
-    'onlyContent',
+    'nopadding',
     '0px',
     withButtonProps((_, __, unit = DEFAULT_UNIT) => `${unit * 4}px`),
   )};
   padding-right: ${ifProp(
-    'onlyContent',
+    'nopadding',
     '0px',
     withButtonProps((_, __, unit = DEFAULT_UNIT) => `${unit * 4}px`),
   )};

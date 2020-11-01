@@ -11,7 +11,7 @@ const DefaultLoader = () => (
 
 const propTypes = {
   Loader: PropTypes.elementType,
-  isLoading: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 const defaultProps = {

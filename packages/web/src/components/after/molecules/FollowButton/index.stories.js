@@ -1,25 +1,38 @@
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 
-import { FOLLOW_STATUS } from '@const';
 import { ModalProvider } from '@contexts';
+import rootReducer from '@reducer';
+import { rawLikers } from '@fixtures';
+import { withRedux } from '../../../../common';
 import FollowButton from '.';
+
+const postId = '1000';
+const likers = {
+  [postId]: rawLikers,
+};
 
 export default {
   title: 'components/molecules/FollowButton',
   component: FollowButton,
-  decorators: [withKnobs],
+  decorators: [
+    withKnobs,
+    withRedux(rootReducer)({
+      likers,
+    }),
+  ],
 };
 
 export const base = () => {
   return (
     <ModalProvider>
       <FollowButton
-        myId="1"
-        userId="2"
-        followStatus={FOLLOW_STATUS.none}
-        username="tester"
-        profileImage="https://picsum.photos/id/1003/1181/1772"
+        userId={rawLikers[0].id}
+        postId={postId}
+        username={rawLikers[0].username}
+        profileImage={rawLikers[0].profileImage}
+        updateFollowing={action('update follow status!')}
       />
     </ModalProvider>
   );

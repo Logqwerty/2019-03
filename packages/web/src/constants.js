@@ -27,6 +27,8 @@ export const BUTTON_TYPES = Object.freeze({
 
 export const POST_WIDTH = 615;
 export const POST_IMAGE_HEIGHT = 615;
+export const POST_SPACE_VERTICAL = 16;
+export const POST_SPACE_HORIZONTAL = 16;
 
 export const PROFILE_LENGTH = 32;
 export const PROFILE_MAX_RATIO = 10;
@@ -45,6 +47,23 @@ export const FOLLOW_STATUS = Object.freeze({
 export const FOLLOW_STATUS_TEXT = Object.freeze({
   [FOLLOW_STATUS.none]: '팔로우',
   [FOLLOW_STATUS.following]: '팔로잉',
+});
+
+export const TIME_TYPE = Object.freeze({
+  now: 'n',
+  sec: 's',
+  min: 'm',
+  hour: 'h',
+  day: 'd',
+  week: 'w',
+});
+
+export const TIME_UNIT = Object.freeze({
+  sec: 1000,
+  min: 60000,
+  hour: 3600000,
+  day: 86400000,
+  week: 604800000,
 });
 
 export const ICON_IMAGE_LENGTH = 1000;

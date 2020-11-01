@@ -1,44 +1,47 @@
-import { useState, useRef } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useCallback } from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 
 import { ICON_TYPES } from '@const';
-import { CREATE_POST_LIKE, DELETE_POST_LIKE } from '../../../../queries';
 
 const getHeartType = isLike =>
   isLike ? ICON_TYPES.fullHeart : ICON_TYPES.emptyHeart;
 
-export const useToggleHeart = (
-  { likerInfo, isLike, id: postId, writer: { id: writerId } },
-  { id: userId },
-) => {
-  const likerCount = useRef(likerInfo.likerCount);
-  const [heartType, setHeartType] = useState(getHeartType(isLike));
-  const [createPostLike] = useMutation(CREATE_POST_LIKE);
-  const [deletePostLike] = useMutation(DELETE_POST_LIKE);
+const findPostById = (state, postId) => {
+  return state.MAIN.posts.find(({ id }) => id === postId);
+};
 
-  const onClickHeartIcon = () => {
-    setHeartType(prevType => {
-      let nextType;
-      if (prevType === ICON_TYPES.fullHeart) {
-        nextType = ICON_TYPES.emptyHeart;
-        likerCount.current -= 1;
-        deletePostLike({
-          variables: { PostId: postId, UserId: userId },
-        });
-      } else {
-        nextType = ICON_TYPES.fullHeart;
-        likerCount.current += 1;
-        createPostLike({
-          variables: { PostId: postId, WriterId: writerId, UserId: userId },
-        });
-      }
-      return nextType;
-    });
+export const useComments = postId => {
+  const { comments, commentCount } = useSelector(state => {
+    const post = findPostById(state, postId);
+    return {
+      comments: (post && post.commentList) || [],
+      commentCount: (post && post.commentCount) || 0,
+    };
+  }, shallowEqual);
+
+  return {
+    comments,
+    commentCount,
   };
+};
+
+export const usePostLike = ({ toggleHeart, ...rest }) => {
+  const { isLike, likerCount, heartType } = useSelector(state => {
+    const post = findPostById(state, rest.postId);
+    return {
+      isLike: post.isLike,
+      likerCount: post.likerInfo.likerCount,
+      heartType: getHeartType(post.isLike),
+    };
+  }, shallowEqual);
+
+  const onClickHeart = useCallback(() => {
+    toggleHeart({ ...rest, isLike });
+  }, [rest, isLike, toggleHeart]);
 
   return {
     heartType,
-    likerCount: likerCount.current,
-    onClickHeartIcon,
+    likerCount,
+    onClickHeart,
   };
 };

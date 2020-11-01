@@ -1,27 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Profile, Comment, PostModal } from '@molecules';
-import { useToggleHeart } from './hooks';
-import { useModalContext } from '../../../../contexts';
+import { Comment as MainComment } from '@molecules';
+import { PostHead, PostLikerCount, PostComments } from '@organisms';
+import { ModalProvider } from '@contexts';
+import { useMyInfoCookie } from '@hooks';
+import { usePostLike, useComments } from './hooks';
 import {
   PostFlex,
-  PostTopFlex,
   PostIconGroupFlex,
   PostBottomFlex,
-  Username,
   PostImage,
-  EllipsisIcon,
   HeartIcon,
   CommentIcon,
-  LikeInformation,
-  ShowMoreComments,
   StyledCommentInput as CommentInput,
+  StyledTimePassedText as TimePassedText,
 } from './styles';
 
-const MainComment = Comment;
-
 const propTypes = {
+  toggleHeart: PropTypes.func.isRequired,
+  addComment: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
   post: PropTypes.shape({
     id: PropTypes.string,
     imageURL: PropTypes.string,
@@ -49,73 +48,54 @@ const propTypes = {
         }),
       }),
     ),
-  }),
-  myInfo: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    profileImage: PropTypes.string,
-  }),
+  }).isRequired,
 };
 
-const Post = ({ post, myInfo }) => {
-  const { isOpen, onOpenModal, onCloseModal } = useModalContext();
-  const { heartType, likerCount, onClickHeartIcon } = useToggleHeart(
-    post,
-    myInfo,
-  );
-  const {
-    writer,
-    imageURL,
-    content,
-    postURL,
-    commentCount,
-    commentList,
-  } = post;
-  const { username: writerName, profileImage } = writer;
-  const { username: myName } = myInfo;
+const Post = ({ post, toggleHeart, addComment, deletePost }) => {
+  const { id: postId, writer, imageURL, content, postURL, updatedAt } = post;
+  const { id: writerId } = writer;
+  const { id: myId, username: myName } = useMyInfoCookie();
+  const { comments, commentCount } = useComments(postId);
+  const { heartType, likerCount, onClickHeart } = usePostLike({
+    myId,
+    postId,
+    writerId,
+    toggleHeart,
+  });
 
   return (
-    <PostFlex direction="column">
-      <PostTopFlex verticalAlign="center">
-        <Profile imgUrl={profileImage} ratio={10} />
-        <Username to={`/${writerName}`}>{writerName}</Username>
-        <EllipsisIcon onClick={onOpenModal} />
-        <PostModal
-          isOpen={isOpen}
-          onCloseModal={onCloseModal}
-          postURL={postURL}
-          isMine={myName === writerName}
-        />
-      </PostTopFlex>
+    <PostFlex>
+      <ModalProvider>
+        <PostHead postId={postId} deletePost={deletePost} />
+      </ModalProvider>
       <PostImage src={imageURL} />
       <PostIconGroupFlex>
-        <HeartIcon iconType={heartType} onClick={onClickHeartIcon} />
+        <HeartIcon iconType={heartType} onClick={onClickHeart} />
         <CommentIcon to={`/p/${postURL}`} />
       </PostIconGroupFlex>
-      <PostBottomFlex direction="column">
-        {likerCount > 0 && (
-          <LikeInformation>좋아요 {likerCount}개</LikeInformation>
-        )}
+      <PostBottomFlex>
+        <ModalProvider>
+          <PostLikerCount likerCount={likerCount} myId={myId} postId={postId} />
+        </ModalProvider>
         <MainComment writer={writer} contents={content} />
-        {commentCount >= 3 && (
-          <ShowMoreComments to={`/p/${postURL}`}>
-            댓글 {commentCount}개 모두 보기
-          </ShowMoreComments>
-        )}
-        {commentList.map(({ writer: commenter, content: commentContents }) => (
-          <Comment
-            key={commenter.username}
-            writer={commenter}
-            contents={commentContents}
-          />
-        ))}
+        <PostComments
+          postURL={postURL}
+          commentCount={commentCount}
+          comments={comments}
+        />
       </PostBottomFlex>
-      <CommentInput />
+      <TimePassedText updatedAt={updatedAt} />
+      <CommentInput
+        addComment={addComment}
+        myId={myId}
+        myName={myName}
+        writerId={writerId}
+        postId={postId}
+      />
     </PostFlex>
   );
 };
 
 Post.propTypes = propTypes;
 
-export default Post;
+export default React.memo(Post);

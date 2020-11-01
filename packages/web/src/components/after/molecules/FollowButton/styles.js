@@ -25,7 +25,7 @@ export const InnerSpinner = styled(Spinner).attrs(() => ({
   transform: translate(-50%, -50%);
 `;
 
-export const StyledFollowButton = styled(Button)`
+export const StyledButton = styled(Button)`
   position: relative;
   font-weight: bold;
   ${ifProp('isFollowing', followingStyles)};

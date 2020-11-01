@@ -17,4 +17,4 @@ const Icon = props => <StyledSpan {...props} />;
 Icon.propTypes = propTypes;
 Icon.defaultProps = defaultProps;
 
-export default Icon;
+export default React.memo(Icon);

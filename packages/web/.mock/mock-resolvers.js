@@ -1,5 +1,5 @@
 import { FOLLOW_STATUS } from '../src/constants';
-import { rawLikers } from '../src/__test__/fixtures';
+import { rawLikers, profileImage, posts } from '../src/__test__/fixtures';
 
 const delay = (sec = 1) => {
   return new Promise(resolve =>
@@ -56,10 +56,36 @@ const likerList = async (_, args) => {
     .slice(0, limit);
 };
 
+const createComment = async (_, args) => {
+  console.info(`[createComment] arg: ${JSON.stringify(args, null, 2)}`);
+  await delay();
+  const { content, PostId } = args;
+  return {
+    id: Date.now().toString(),
+    content,
+    updatedAt: Date.now().toString(),
+    writer: {
+      username: 'tester1',
+      profileImage,
+    },
+    PostId,
+  };
+};
+
+const followingPostList = async (_, args) => {
+  console.info(`[followingPostList] arg: ${JSON.stringify(args, null, 2)}`);
+  const { cursor, limit } = args;
+  await delay();
+  return posts
+    .filter(({ updatedAt }) => (cursor || Date.now()) > +updatedAt)
+    .slice(0, limit);
+};
+
 export default {
   String: () => 'Hello, World!',
   Query: () => ({
     likerList,
+    followingPostList,
   }),
   Mutation: () => ({
     createPostLike,
@@ -67,5 +93,6 @@ export default {
     deletePost,
     RequestFollowing,
     RequestFollowingCancellation,
+    createComment,
   }),
 };

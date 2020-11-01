@@ -1,22 +1,32 @@
 import React from 'react';
-import { withKnobs, text, boolean } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
+import { myInfo, posts } from '@fixtures';
+import { withRedux } from '../../../../common';
 import CommentInput from '.';
 
 export default {
   title: 'components/molecules/CommentInput',
   component: CommentInput,
-  decorators: [withKnobs],
+  decorators: [
+    withKnobs,
+    withRedux(state => state)({
+      MAIN: {
+        posts,
+      },
+    }),
+  ],
 };
 
 export const base = () => {
-  const submitDisabled = boolean('submitDisabled', false);
-
   return (
     <CommentInput
-      submitDisabled={submitDisabled}
-      onChange={action('CommentInput value changed!')}
+      addComment={action('add comment!')}
+      myName={myInfo.username}
+      myId={myInfo.id}
+      postId={posts[0].id}
+      writerId="3"
     />
   );
 };

@@ -39,4 +39,4 @@ const Profile = ({ ratio, imgUrl, to, href, className }) => {
 Profile.propTypes = propTypes;
 Profile.defaultProps = defaultProps;
 
-export default Profile;
+export default React.memo(Profile);
