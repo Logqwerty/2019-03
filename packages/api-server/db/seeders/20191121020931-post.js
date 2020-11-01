@@ -1,19 +1,24 @@
-Number.prototype.pad = function(size) {
-  let s = String(this);
-  while (s.length < (size || 2)) {
-    s = `0${s}`;
+const S3_URL = 'https://youngstar-storage.s3.ap-northeast-2.amazonaws.com/post';
+const CAT_MAX_COUNT = 885;
+
+const addPrefixZero = (num, maxLength = 4) => {
+  const digits = [...num.toString()];
+  let iter = maxLength - digits.length;
+  while (iter > 0) {
+    iter -= 1;
+    digits.unshift('0');
   }
-  return s;
+  return digits.join('');
 };
 
 module.exports = {
   up: queryInterface => {
     const postList = [];
-    for (let i = 0; i < 1000; i += 1) {
+    for (let i = 0; i <= 1500; i += 1) {
+      const postfix = i >= CAT_MAX_COUNT ? i - CAT_MAX_COUNT : i;
+      const prefix = i >= CAT_MAX_COUNT ? 'dog' : 'cat';
       postList.push({
-        imageURL: `https://kr.object.ncloudstorage.com/youngstargram/post/fruit_${i.pad(
-          4,
-        )}.jpg`,
+        imageURL: `${S3_URL}/${prefix}_${addPrefixZero(postfix)}.jpg`,
         postURL: `${Math.random()
           .toString(36)
           .substr(2, 6)}`,
