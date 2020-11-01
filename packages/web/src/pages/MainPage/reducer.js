@@ -8,6 +8,12 @@ import {
   DELETE_POST,
 } from './actions';
 
+const initialState = {
+  posts: [],
+  loading: false,
+  error: null,
+};
+
 const createLoadState = (state, newState) => {
   return {
     ...state,
@@ -51,7 +57,7 @@ const addNewComment = createNewPosts((post, { comment }) => ({
 
 const deletePost = createNewPosts(() => null);
 
-const reducer = (state = {}, action) => {
+const reducer = (state = initialState, action) => {
   const { type, error, posts } = action;
   switch (type) {
     case LOAD_POSTS:

@@ -4,7 +4,7 @@ import { useErrorHandler } from 'react-error-boundary';
 import { Post } from '@organisms';
 import { ScrollableContainer } from '@molecules';
 import { useMyInfoCookie } from '@hooks';
-import { useFetchPosts, usePostHandlers } from '../../hooks';
+import { useFetchPosts, usePostHandlers } from './hooks';
 
 const Posts = () => {
   const handleError = useErrorHandler();

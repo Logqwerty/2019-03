@@ -17,6 +17,7 @@ export const PostFlex = styled(Flex).attrs(() => ({
   direction: FLEX_DIRECTION.col,
 }))`
   width: ${POST_WIDTH}px;
+  background-color: ${palette('white')}
   border: 1px solid ${palette('border')};
   margin-bottom: 48px;
 `;

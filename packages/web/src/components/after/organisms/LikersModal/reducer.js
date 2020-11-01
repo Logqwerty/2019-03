@@ -8,6 +8,12 @@ import {
   RESET_LIKERS,
 } from './actions';
 
+const initialState = {
+  likers: {},
+  loading: false,
+  error: null,
+};
+
 const createLikersState = (state, newState) => {
   return {
     ...state,
@@ -35,7 +41,7 @@ const updateLikerFollowing = (state, action) => {
   };
 };
 
-const reducer = (state = {}, action) => {
+const reducer = (state = initialState, action) => {
   const { type, error, postId, likers } = action;
   switch (type) {
     case LOAD_LIKERS:

@@ -4,7 +4,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import { ServerError } from '@molecules';
 import BaseTemplate from '../BaseTemplate';
-import Posts from './components/Posts';
+import Posts from './Posts';
 import { PostsFlex } from './styles';
 import { recoverPostsError } from './actions';
 

@@ -4,9 +4,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { createGlobalStyle } from 'styled-components';
 import { CookiesProvider } from 'react-cookie';
+import { Provider as StoreProvier } from 'react-redux';
 
 import App from './containers/before/App';
 import { apolloClient } from './common';
+import store from './store';
 
 const GlobalStyle = createGlobalStyle`
     @font-face {
@@ -26,10 +28,12 @@ const GlobalStyle = createGlobalStyle`
 ReactDOM.render(
   <BrowserRouter>
     <CookiesProvider>
-      <ApolloProvider client={apolloClient}>
-        <GlobalStyle />
-        <App />
-      </ApolloProvider>
+      <StoreProvier store={store}>
+        <ApolloProvider client={apolloClient}>
+          <GlobalStyle />
+          <App />
+        </ApolloProvider>
+      </StoreProvier>
     </CookiesProvider>
   </BrowserRouter>,
   document.getElementById('root'),

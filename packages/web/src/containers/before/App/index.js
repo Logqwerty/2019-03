@@ -12,6 +12,7 @@ import AccountRoute from './AccountRoute';
 import MyAppPage from '../MyAppPage';
 import { IS_LOGGED_IN } from '../../../queries';
 import { MainPage } from '../../../pages';
+import theme from '../../../styles/theme';
 
 const HomePage = lazy(() => import('../HomePage'));
 const NewPostPage = lazy(() => import('../NewPostPage'));
@@ -55,23 +56,7 @@ function App({ cookies }) {
 
   return (
     <AppWrapper>
-      <ThemeProvider
-        theme={{
-          palette: {
-            background: '#FAFAFA',
-            secondary: '#6C757D',
-            light: '#F8F9FA',
-            gray_bright: '#F5F5F5',
-            gray_font: '#999999',
-            border: '#e6e6e6',
-            border_secondary: '#dbdbdb',
-            white: '#FFFFFF',
-            blue: '#3897F1',
-            blue_facebook: '#375184',
-            pink: '#ee4957',
-          },
-        }}
-      >
+      <ThemeProvider theme={theme}>
         <AuthRoute path="/" data={data}>
           <Navigation />
           <Suspense fallback={<Loading size={50} />}>
